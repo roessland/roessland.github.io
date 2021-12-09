@@ -17,7 +17,7 @@
 <meta itemprop=name content="Advent of Code 2021 Day 9: Smoke Basin">
 <meta itemprop=description content="Flood fill in a more literal sense. Implemented using DisjointSet, also known as Union-Find algorithm."><meta itemprop=datePublished content="2021-12-09T00:00:00+00:00">
 <meta itemprop=dateModified content="2021-12-09T00:00:00+00:00">
-<meta itemprop=wordCount content="823">
+<meta itemprop=wordCount content="824">
 <meta itemprop=keywords content><meta name=twitter:card content="summary">
 <meta name=twitter:title content="Advent of Code 2021 Day 9: Smoke Basin">
 <meta name=twitter:description content="Flood fill in a more literal sense. Implemented using DisjointSet, also known as Union-Find algorithm.">
@@ -65,7 +65,7 @@ Andreas Røssland
 <p>Today&rsquo;s problem was to find the three biggest <em>basins</em> in a height map.
 Assuming that smoke flows downhill, and cannot rise to z=9 or above, smoke will fill the basins. Each tile with z&lt;9 will then belong to exactly one basin.</p>
 <p>These basins sure sound like <a href=https://en.wikipedia.org/wiki/Component_(graph_theory)>connected components</a>, so I dug up my old <a href=https://en.wikipedia.org/wiki/Disjoint-set_data_structure>DisjointSet data structure (aka Union-Find)</a>, instead of doing a flood-fill or any kind of graph traversal. (Obviously we have to do some kind of traversal, but that is neatly hidden away inside the <a href=https://github.com/roessland/gopkg/tree/master/disjointset>DisjointSet implementation</a>.)</p>
-<p>I start out with one component per tile, and then connect the tile to neighboring tiles that should be in the same basin. In my implementation I initially assumed that there is only one &ldquo;lowest&rdquo; point, by only connecting tiles to strictly downstream tiles. This would not work if the two lowest tiles in a basin were on the same height, but luckily for me the input is crafted to avoid this problem. I then realized that the level 9 &ldquo;walls&rdquo; effectively form a barrier around each basic, we can simplify and just connect every tile to every <code>z!=9</code> tile.</p>
+<p>I start out with one component per tile, and then connect the tile to neighboring tiles that should be in the same basin. In my implementation I initially assumed that there is only one &ldquo;lowest&rdquo; point, by only connecting tiles to strictly downstream tiles. This would not work if the two lowest tiles in a basin were on the same height, but luckily for me the input is crafted to avoid this problem. I then realized that the level 9 &ldquo;walls&rdquo; effectively form a barrier around each basic, so we can simplify and just connect every tile to every <code>z!=9</code> tile.</p>
 <p>Now I know which basin each tile belongs to, so what is left is to compute the size of each basin and find the three largest basins.</p>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>part2</span>(<span style=color:#a6e22e>m</span> <span style=color:#a6e22e>Map</span>) {
 	<span style=color:#75715e>// Start with every tile being its own component.
@@ -213,7 +213,7 @@ Assuming that smoke flows downhill, and cannot rise to z=9 or above, smoke will 
 
 </code></pre></div><h2 id=disjointset-implementation>DisjointSet implementation</h2>
 <p>You can import this package using <code>go get github.com/roessland/gopkg/disjointset</code> and then <code>import thub.com/roessland/gopkg/disjointset</code>.
-It is inspired by <a href=https://no.wikipedia.org/wiki/Robert_Sedgewick>Robert Sedgewick&rsquo;s</a> <a href=https://www.coursera.org/learn/algorithms-part1#syllabus>Algorithms course.</a>, which has a great explanation of Union-Find/DisjointSet.</p>
+It is inspired by <a href=https://no.wikipedia.org/wiki/Robert_Sedgewick>Robert Sedgewick&rsquo;s</a> <a href=https://www.coursera.org/learn/algorithms-part1#syllabus>Algorithms course</a>, which has a great explanation of Union-Find/DisjointSet.</p>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>package</span> <span style=color:#a6e22e>disjointset</span>
 
 <span style=color:#75715e>// For usage, see the tests
