@@ -22,7 +22,8 @@
 <meta name=twitter:title content="Advent of Code 2021 Day 7: The Treachery of Whales">
 <meta name=twitter:description content="Introduction to crustacean based optimization methods.">
 <script src=https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.13.4/mermaid.min.js integrity="sha512-JERecFUBbsm75UpkVheAuDOE8NdHjQBrPACfEQYPwvPG+fjgCpHAz1Jw2ci9EXmd3DdfiWth3O3CQvcfEg8gsA==" crossorigin=anonymous referrerpolicy=no-referrer></script>
-<script>window.addEventListener('DOMContentLoaded',function(){let a=document.getElementsByClassName("language-mermaid");for(let b of a){let c=b.parentElement;c.before(b),c.remove()}mermaid.init(void 0,".language-mermaid")})</script>
+<script type=text/javascript src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>window.addEventListener('DOMContentLoaded',function(){let a=document.getElementsByClassName("language-mermaid");for(let b of a){let c=b.parentElement;c.before(b),c.remove()}mermaid.init(void 0,".language-mermaid")}),MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['[',']']],processEscapes:!0,processEnvironments:!0,skipTags:['script','noscript','style','textarea','pre'],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}})</script>
 </head>
 <body class="ma0 avenir bg-near-white">
 <header>
@@ -67,10 +68,10 @@ Andreas Røssland
 \begin{aligned}dist(x, y) &= |x-y|
 \quad &\textrm{(Euclidean)}
 \\
-dist2(x,y) &= \frac{|x-y|) \cdot (|x-y| + 1)}{2} \quad &\textrm{(Almost Euclidean squared)}
+dist2(x,y) &= \frac{|x-y| \cdot (|x-y| + 1)}{2} \quad &\textrm{(Almost Euclidean squared)}
 \end{aligned}
 $$</p>
-<p>After finding the <a href=https://en.wikipedia.org/wiki/Triangular_number>closed form sum</a> for <code>$dist2$</code> I just bruteforced it by trying the whole range of possible positions.</p>
+<p>After finding the <a href=https://en.wikipedia.org/wiki/Triangular_number>closed form sum</a> for <code>dist2</code> I just bruteforced it by trying the whole range of possible positions.</p>
 <p>I also tried <a href=https://en.wikipedia.org/wiki/Gradient_descent>gradient descent</a> and <a href=https://en.wikipedia.org/wiki/Nelder%E2%80%93Mead_method>Nelder-Mead</a> but the code was much more complicated than the bruteforce solution, and barely faster. Gradient descent was tricky since the function is not differentiable, so I had to approximate the gradient using a difference method.</p>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
 
