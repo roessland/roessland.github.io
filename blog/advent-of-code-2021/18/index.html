@@ -17,7 +17,7 @@
 <meta itemprop=name content="Advent of Code 2021 Day 18: Snailfish">
 <meta itemprop=description content="Tree-traversal for snailfish number calculation purposes."><meta itemprop=datePublished content="2021-12-18T00:00:00+00:00">
 <meta itemprop=dateModified content="2021-12-18T00:00:00+00:00">
-<meta itemprop=wordCount content="1273">
+<meta itemprop=wordCount content="1301">
 <meta itemprop=keywords content><meta name=twitter:card content="summary">
 <meta name=twitter:title content="Advent of Code 2021 Day 18: Snailfish">
 <meta name=twitter:description content="Tree-traversal for snailfish number calculation purposes.">
@@ -143,15 +143,16 @@ Andreas Røssland
 	}
 }
 </code></pre></div><h3 id=splitting>Splitting</h3>
+<p>Walk through the leaf nodes in left to right order, and return the first number that is too high (&ldquo;splittable&rdquo;), then replace that number with a new pair.</p>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>n</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>) <span style=color:#a6e22e>findSplittable</span>() <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span> {
 	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>n</span> <span style=color:#f92672>==</span> <span style=color:#66d9ef>nil</span> {
 		<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>nil</span>
 	}
-	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>value</span> <span style=color:#f92672>&gt;=</span> <span style=color:#ae81ff>10</span> {
-		<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>n</span>
-	}
 	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>leftSplittable</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>findSplittable</span>(); <span style=color:#a6e22e>leftSplittable</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
 		<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>leftSplittable</span>
+	}
+	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>value</span> <span style=color:#f92672>&gt;=</span> <span style=color:#ae81ff>10</span> {
+		<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>n</span>
 	}
 	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>rightSplittable</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>findSplittable</span>(); <span style=color:#a6e22e>rightSplittable</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
 		<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>rightSplittable</span>
