@@ -17,7 +17,7 @@
 <meta itemprop=name content="Advent of Code 2021 Day 14: Extended Polymerization">
 <meta itemprop=description content="Growing petabyte-long molecules at home."><meta itemprop=datePublished content="2021-12-14T00:00:00+00:00">
 <meta itemprop=dateModified content="2021-12-14T00:00:00+00:00">
-<meta itemprop=wordCount content="403">
+<meta itemprop=wordCount content="404">
 <meta itemprop=keywords content><meta name=twitter:card content="summary">
 <meta name=twitter:title content="Advent of Code 2021 Day 14: Extended Polymerization">
 <meta name=twitter:description content="Growing petabyte-long molecules at home.">
@@ -62,7 +62,8 @@ Andreas Røssland
 </p>
 <time class="f6 mv4 dib tracked" datetime=2021-12-14T00:00:00Z>December 14, 2021</time>
 </header>
-<div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p><a href=https://adventofcode.com/2021/day/14>https://adventofcode.com/2021/day/14</a></p>
+<div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p><a href=https://adventofcode.com/2021/day/14>https://adventofcode.com/2021/day/14</a>
+<a href=https://github.com/roessland/advent-of-code>https://github.com/roessland/advent-of-code</a></p>
 <p>The main insight needed to solve part 2 of this one is that it is unnecessary to keep the entire string in memory. The problem only asks for the <em>number</em> of each element in the polymer, and additional elements are only added in-between pairs of elements. Because of this it is enough to keep track of the frequencies of every pair in the string.</p>
 <p>The pairwise count can then be transformed into an elementwise count. Just remember to take the elements at the edge into account, since they are only counted once, while all other elements are counted twice. This can be done by incrementing the count of the &ldquo;start pair&rdquo;, consisting of the first and last element in the entire string, which remains unchanged through the process,</p>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#a6e22e>pairCounts</span>[[<span style=color:#ae81ff>2</span>]<span style=color:#66d9ef>byte</span>{<span style=color:#a6e22e>firstElem</span>, <span style=color:#a6e22e>lastElem</span>}]<span style=color:#f92672>++</span>

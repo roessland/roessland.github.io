@@ -17,7 +17,7 @@
 <meta itemprop=name content="Advent of Code 2021 Day 6: Lanternfish">
 <meta itemprop=description content="Modeling an exponentially growing population of lanternfish."><meta itemprop=datePublished content="2021-12-06T00:00:00+00:00">
 <meta itemprop=dateModified content="2021-12-06T00:00:00+00:00">
-<meta itemprop=wordCount content="324">
+<meta itemprop=wordCount content="325">
 <meta itemprop=keywords content><meta name=twitter:card content="summary">
 <meta name=twitter:title content="Advent of Code 2021 Day 6: Lanternfish">
 <meta name=twitter:description content="Modeling an exponentially growing population of lanternfish.">
@@ -62,7 +62,8 @@ Andreas Røssland
 </p>
 <time class="f6 mv4 dib tracked" datetime=2021-12-06T00:00:00Z>December 6, 2021</time>
 </header>
-<div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p><a href=https://adventofcode.com/2021/day/6>https://adventofcode.com/2021/day/6</a></p>
+<div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p><a href=https://adventofcode.com/2021/day/6>https://adventofcode.com/2021/day/6</a>
+<a href=https://github.com/roessland/advent-of-code>https://github.com/roessland/advent-of-code</a></p>
 <p>Here we have to model the growth of a bunch of exponentially growing lanternfish. The trick is to not model each lanternfish as a separate object, which would probably fail for part 2, but instead use <code>map[int]int</code> to store the state, where the key is the days until multiplication, and the value is the number of fish in that state. That way the state of a population of billions of lanternfish can be stored in a map of length 9, since lanternfish have no properties other than <code>daysLeft</code>.</p>
 <p>I implemented the map as <code>[9]int</code> since the maximum map key is 8. Such a short array should use much less memory and have a better memory access pattern than a map. It&rsquo;s not relevant here though since it runs in &lt; 100 ms.</p>
 <p>A small Go gotcha one could stumble upon in this problem is that maps are mutable and passed by reference, but I avoided that by making a copy of the map in the <code>Next</code> function (and also by using <code>[9]int</code>).</p>

@@ -17,7 +17,7 @@
 <meta itemprop=name content="Advent of Code 2021 Day 5: Hydrothermal Venture">
 <meta itemprop=description content="Helping Santa&rsquo;s submarine avoid dangerous clusters of hydrothermal vents using a line drawing algorithm."><meta itemprop=datePublished content="2021-12-05T00:00:00+00:00">
 <meta itemprop=dateModified content="2021-12-05T00:00:00+00:00">
-<meta itemprop=wordCount content="286">
+<meta itemprop=wordCount content="287">
 <meta itemprop=keywords content><meta name=twitter:card content="summary">
 <meta name=twitter:title content="Advent of Code 2021 Day 5: Hydrothermal Venture">
 <meta name=twitter:description content="Helping Santa&rsquo;s submarine avoid dangerous clusters of hydrothermal vents using a line drawing algorithm.">
@@ -62,7 +62,8 @@ Andreas Røssland
 </p>
 <time class="f6 mv4 dib tracked" datetime=2021-12-05T00:00:00Z>December 5, 2021</time>
 </header>
-<div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p><a href=https://adventofcode.com/2021/day/5>https://adventofcode.com/2021/day/5</a></p>
+<div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p><a href=https://adventofcode.com/2021/day/5>https://adventofcode.com/2021/day/5</a>
+<a href=https://github.com/roessland/advent-of-code>https://github.com/roessland/advent-of-code</a></p>
 <p>This one was pretty easy. I did a small mistake at first by not considering n=0 in my <code>Sign</code> function, causing lines in the (dx=1,dy=0) direction being drawn in the (dx=1,dy=1) direction, which again caused an out of bounds error. Decided I was tired of implementing basic programming language features again and again, and added these functions to my <a href=https://github.com/roessland/gopkg/blob/v1.3.2/mathutil/absminmax.go>gopkg</a> utility library.</p>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
 

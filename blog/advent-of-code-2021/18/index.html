@@ -17,7 +17,7 @@
 <meta itemprop=name content="Advent of Code 2021 Day 18: Snailfish">
 <meta itemprop=description content="Tree-traversal for snailfish number calculation purposes."><meta itemprop=datePublished content="2021-12-18T00:00:00+00:00">
 <meta itemprop=dateModified content="2021-12-18T00:00:00+00:00">
-<meta itemprop=wordCount content="1301">
+<meta itemprop=wordCount content="1302">
 <meta itemprop=keywords content><meta name=twitter:card content="summary">
 <meta name=twitter:title content="Advent of Code 2021 Day 18: Snailfish">
 <meta name=twitter:description content="Tree-traversal for snailfish number calculation purposes.">
@@ -62,7 +62,8 @@ Andreas Røssland
 </p>
 <time class="f6 mv4 dib tracked" datetime=2021-12-18T00:00:00Z>December 18, 2021</time>
 </header>
-<div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p><a href=https://adventofcode.com/2021/day/18>https://adventofcode.com/2021/day/18</a></p>
+<div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p><a href=https://adventofcode.com/2021/day/18>https://adventofcode.com/2021/day/18</a>
+<a href=https://github.com/roessland/advent-of-code>https://github.com/roessland/advent-of-code</a></p>
 <p>This one was pretty tricky. I had to write a ton of tests to figure out the bugs in my program. (The trickiest one was related to forgetting to update the <code>parent</code> pointer.)</p>
 <h3 id=tree-data-structure>Tree data structure</h3>
 <p>Parsing the input: It really looks like a tree structure will work here, so I use the builtin JSON decoder to create an untyped tree (<code>interface{}</code>), and then convert that tree to a proper type.</p>

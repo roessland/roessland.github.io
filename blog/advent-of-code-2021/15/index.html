@@ -17,7 +17,7 @@
 <meta itemprop=name content="Advent of Code 2021 Day 15: Chiton">
 <meta itemprop=description content="Dijkstra&rsquo;s shortest path algorithm with a priority queue implemented using container/heap."><meta itemprop=datePublished content="2021-12-15T00:00:00+00:00">
 <meta itemprop=dateModified content="2021-12-15T00:00:00+00:00">
-<meta itemprop=wordCount content="895">
+<meta itemprop=wordCount content="896">
 <meta itemprop=keywords content><meta name=twitter:card content="summary">
 <meta name=twitter:title content="Advent of Code 2021 Day 15: Chiton">
 <meta name=twitter:description content="Dijkstra&rsquo;s shortest path algorithm with a priority queue implemented using container/heap.">
@@ -62,7 +62,8 @@ Andreas Røssland
 </p>
 <time class="f6 mv4 dib tracked" datetime=2021-12-15T00:00:00Z>December 15, 2021</time>
 </header>
-<div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p><a href=https://adventofcode.com/2021/day/15>https://adventofcode.com/2021/day/15</a></p>
+<div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p><a href=https://adventofcode.com/2021/day/15>https://adventofcode.com/2021/day/15</a>
+<a href=https://github.com/roessland/advent-of-code>https://github.com/roessland/advent-of-code</a></p>
 <p>Today&rsquo;s problem was to find the shortest path in a graph. <a href=https://en.wikipedia.org/wiki/A*_search_algorithm>A*</a> or <a href=https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm>Dijkstra</a> are the obvious solutions. I decided to just use <a href=https://github.com/roessland/gopkg/blob/master/digraph/dijkstra.go>my existing Dijkstra implementation</a> for this.</p>
 <p>I create a big graph of the extended graph, solve part 2, then delete edges going out from the first area and run Dijkstra again. So the answer for Part 2 is actually computed first. If I don&rsquo;t delete those edges the answer is too low, since the optimal path to the corner of the initial area actually goes outside the initial area for my input.</p>
 <p>I introduce the concept of <code>I5</code> and <code>I1</code> to avoid getting so confused. <code>I5</code> is the width of the expanded cave, and <code>I1</code> is the width of the initial cave.</p>

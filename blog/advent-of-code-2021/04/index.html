@@ -17,7 +17,7 @@
 <meta itemprop=name content="Advent of Code 2021 Day 4: Giant Squid">
 <meta itemprop=description content="Implementing the bingo subsystem for Santa&rsquo;s submarine."><meta itemprop=datePublished content="2021-12-04T00:00:00+00:00">
 <meta itemprop=dateModified content="2021-12-04T00:00:00+00:00">
-<meta itemprop=wordCount content="498">
+<meta itemprop=wordCount content="499">
 <meta itemprop=keywords content><meta name=twitter:card content="summary">
 <meta name=twitter:title content="Advent of Code 2021 Day 4: Giant Squid">
 <meta name=twitter:description content="Implementing the bingo subsystem for Santa&rsquo;s submarine.">
@@ -62,7 +62,8 @@ Andreas Røssland
 </p>
 <time class="f6 mv4 dib tracked" datetime=2021-12-04T00:00:00Z>December 4, 2021</time>
 </header>
-<div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p><a href=https://adventofcode.com/2021/day/4>https://adventofcode.com/2021/day/4</a></p>
+<div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p><a href=https://adventofcode.com/2021/day/4>https://adventofcode.com/2021/day/4</a>
+<a href=https://github.com/roessland/advent-of-code>https://github.com/roessland/advent-of-code</a></p>
 <p>Today I re-learned: To split a string in Go on one or more spaces, use <code>strings.Fields</code> instead of <code>strings.Split</code> since the latter parses two consecutive spaces as an empty string between two separators.</p>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>&gt;&gt;</span>&gt; <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%#v\n&#34;</span>, <span style=color:#a6e22e>strings</span>.<span style=color:#a6e22e>Split</span>(<span style=color:#e6db74>&#34;1 12  13&#34;</span>, <span style=color:#e6db74>&#34; &#34;</span>))
 []<span style=color:#66d9ef>string</span>{<span style=color:#e6db74>&#34;1&#34;</span>, <span style=color:#e6db74>&#34;12&#34;</span>, <span style=color:#e6db74>&#34;&#34;</span>, <span style=color:#e6db74>&#34;13&#34;</span>}

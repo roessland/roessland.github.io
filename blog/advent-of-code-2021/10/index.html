@@ -17,7 +17,7 @@
 <meta itemprop=name content="Advent of Code 2021 Day 10: Syntax Scoring">
 <meta itemprop=description content="Bracket matching/autocompletion using a stack."><meta itemprop=datePublished content="2021-12-10T00:00:00+00:00">
 <meta itemprop=dateModified content="2021-12-10T00:00:00+00:00">
-<meta itemprop=wordCount content="380">
+<meta itemprop=wordCount content="381">
 <meta itemprop=keywords content><meta name=twitter:card content="summary">
 <meta name=twitter:title content="Advent of Code 2021 Day 10: Syntax Scoring">
 <meta name=twitter:description content="Bracket matching/autocompletion using a stack.">
@@ -62,7 +62,8 @@ Andreas Røssland
 </p>
 <time class="f6 mv4 dib tracked" datetime=2021-12-10T00:00:00Z>December 10, 2021</time>
 </header>
-<div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p><a href=https://adventofcode.com/2021/day/10>https://adventofcode.com/2021/day/10</a></p>
+<div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p><a href=https://adventofcode.com/2021/day/10>https://adventofcode.com/2021/day/10</a>
+<a href=https://github.com/roessland/advent-of-code>https://github.com/roessland/advent-of-code</a></p>
 <p>The goal here is to find incorrect bracket usage, and in part 2, autocomplete the rest of the line if the syntax is correct except for some missing closing brackets.</p>
 <pre tabindex=0><code>{([(&lt;{}[&lt;&gt;[]}&gt;{[]{[(&lt;()&gt;` - Expected ] but found } instead.
 </code></pre><p>If we use a stack and have a way to map opening brackets to closing brackets, the solution becomes easy.</p>

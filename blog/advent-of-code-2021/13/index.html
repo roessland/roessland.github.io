@@ -17,7 +17,7 @@
 <meta itemprop=name content="Advent of Code 2021 Day 13: Transparent Origami">
 <meta itemprop=description content="Repeated non-linear transformations."><meta itemprop=datePublished content="2021-12-13T00:00:00+00:00">
 <meta itemprop=dateModified content="2021-12-13T00:00:00+00:00">
-<meta itemprop=wordCount content="421">
+<meta itemprop=wordCount content="422">
 <meta itemprop=keywords content><meta name=twitter:card content="summary">
 <meta name=twitter:title content="Advent of Code 2021 Day 13: Transparent Origami">
 <meta name=twitter:description content="Repeated non-linear transformations.">
@@ -62,7 +62,8 @@ Andreas Røssland
 </p>
 <time class="f6 mv4 dib tracked" datetime=2021-12-13T00:00:00Z>December 13, 2021</time>
 </header>
-<div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p><a href=https://adventofcode.com/2021/day/13>https://adventofcode.com/2021/day/13</a></p>
+<div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p><a href=https://adventofcode.com/2021/day/13>https://adventofcode.com/2021/day/13</a>
+<a href=https://github.com/roessland/advent-of-code>https://github.com/roessland/advent-of-code</a></p>
 <p>This one is pretty straight forward. I made it simultaneously easier and harder for myself by using a <code>map[Pos]int</code> instead of <code>[][]int</code>. I used ints instead of bools just in case semi-transparency showed up in part 2, but it didn&rsquo;t. Using a map made the <code>Print</code> function more complicated, but the business logic easier.</p>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
 

@@ -17,7 +17,7 @@
 <meta itemprop=name content="Advent of Code 2021 Day 12: Passage Pathing">
 <meta itemprop=description content="Very exhaustive cave pathfinding."><meta itemprop=datePublished content="2021-12-12T00:00:00+00:00">
 <meta itemprop=dateModified content="2021-12-12T00:00:00+00:00">
-<meta itemprop=wordCount content="407">
+<meta itemprop=wordCount content="408">
 <meta itemprop=keywords content><meta name=twitter:card content="summary">
 <meta name=twitter:title content="Advent of Code 2021 Day 12: Passage Pathing">
 <meta name=twitter:description content="Very exhaustive cave pathfinding.">
@@ -62,7 +62,8 @@ Andreas Røssland
 </p>
 <time class="f6 mv4 dib tracked" datetime=2021-12-12T00:00:00Z>December 12, 2021</time>
 </header>
-<div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p><a href=https://adventofcode.com/2021/day/12>https://adventofcode.com/2021/day/12</a></p>
+<div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p><a href=https://adventofcode.com/2021/day/12>https://adventofcode.com/2021/day/12</a>
+<a href=https://github.com/roessland/advent-of-code>https://github.com/roessland/advent-of-code</a></p>
 <p>Finally a graph problem. This turns out to be a variation of DFS (depth-first search), that I solved using recursion. Since the path search must be exhaustive (find all paths) we can use DFS instead of BFS (breadth-first search) which is slightly easier to implement. In addition there is no need to keep passing down copies of the <code>visited</code> state since each step of DFS can effectively &ldquo;undo&rdquo; what it did before recursing, making it possible to use a single shared <code>map</code> for storing this.</p>
 <p>For part 2 any single small cave can be visited <em>twice</em> instead of just once, drastically increasing the number of possible paths. I solved this by giving the search a &ldquo;token&rdquo;. If a small cave is already visited, the token can be used to visit the cave again. The token can only be used once for each path from start to end, and is optional to use.</p>
 <p>Finally, I optimized the solution by returning the <em>number of paths</em> instead of the entire <em>list of paths</em>. This reduced the runtime from 0.9 seconds to around 0.05 seconds.</p>

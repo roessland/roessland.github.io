@@ -17,7 +17,7 @@
 <meta itemprop=name content="Advent of Code 2021 Day 9: Smoke Basin">
 <meta itemprop=description content="Flood fill in a more literal sense. Implemented using DisjointSet, also known as Union-Find algorithm."><meta itemprop=datePublished content="2021-12-09T00:00:00+00:00">
 <meta itemprop=dateModified content="2021-12-09T00:00:00+00:00">
-<meta itemprop=wordCount content="824">
+<meta itemprop=wordCount content="825">
 <meta itemprop=keywords content><meta name=twitter:card content="summary">
 <meta name=twitter:title content="Advent of Code 2021 Day 9: Smoke Basin">
 <meta name=twitter:description content="Flood fill in a more literal sense. Implemented using DisjointSet, also known as Union-Find algorithm.">
@@ -62,7 +62,8 @@ Andreas Røssland
 </p>
 <time class="f6 mv4 dib tracked" datetime=2021-12-09T00:00:00Z>December 9, 2021</time>
 </header>
-<div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p><a href=https://adventofcode.com/2021/day/9>https://adventofcode.com/2021/day/9</a></p>
+<div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p><a href=https://adventofcode.com/2021/day/9>https://adventofcode.com/2021/day/9</a>
+<a href=https://github.com/roessland/advent-of-code>https://github.com/roessland/advent-of-code</a></p>
 <p>Today&rsquo;s problem was to find the three biggest <em>basins</em> in a height map.
 Assuming that smoke flows downhill, and cannot rise to z=9 or above, smoke will fill the basins. Each tile with z&lt;9 will then belong to exactly one basin.</p>
 <p>These basins sure sound like <a href=https://en.wikipedia.org/wiki/Component_(graph_theory)>connected components</a>, so I dug up my old <a href=https://en.wikipedia.org/wiki/Disjoint-set_data_structure>DisjointSet data structure (aka Union-Find)</a>, instead of doing a flood-fill or any kind of graph traversal. (Obviously we have to do some kind of traversal, but that is neatly hidden away inside the <a href=https://github.com/roessland/gopkg/tree/master/disjointset>DisjointSet implementation</a>.)</p>
