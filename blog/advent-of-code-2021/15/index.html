@@ -67,7 +67,7 @@ Andreas Røssland
 <p>Today&rsquo;s problem was to find the shortest path in a graph. <a href=https://en.wikipedia.org/wiki/A*_search_algorithm>A*</a> or <a href=https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm>Dijkstra</a> are the obvious solutions. I decided to just use <a href=https://github.com/roessland/gopkg/blob/master/digraph/dijkstra.go>my existing Dijkstra implementation</a> for this.</p>
 <p>I create a big graph of the extended graph, solve part 2, then delete edges going out from the first area and run Dijkstra again. So the answer for Part 2 is actually computed first. If I don&rsquo;t delete those edges the answer is too low, since the optimal path to the corner of the initial area actually goes outside the initial area for my input.</p>
 <p>I introduce the concept of <code>I5</code> and <code>I1</code> to avoid getting so confused. <code>I5</code> is the width of the expanded cave, and <code>I1</code> is the width of the initial cave.</p>
-<p>Note <a href=https://en.wikipedia.org/wiki/Cartesian_coordinate_system>the</a> <a href=https://en.wikipedia.org/wiki/Bijection>bijection</a> between <code>(i,j)</code> and <code>id</code>, which is super useful for things like Advent of Code, graphics programming, scientific programming and so on. It encodes a 3-tuple into a single number, as long as the grid dimensions are known.</p>
+<p>Note <a href=https://en.wikipedia.org/wiki/Cartesian_coordinate_system>the</a> <a href=https://en.wikipedia.org/wiki/Bijection>bijection</a> between <code>(i,j)</code> and <code>id</code>, which is super useful for things like Advent of Code, graphics programming, scientific programming and so on. It encodes a 2-tuple into a single number, as long as the grid dimensions are known.</p>
 <pre tabindex=0><code>id = j*I + i
 
 j = id / I = (j*I + i)/I = j
@@ -298,7 +298,7 @@ i = id % J = (j*I + i)%I = i
 <footer class="bg-black bottom-0 w-100 pa3" role=contentinfo>
 <div class="flex justify-between">
 <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href=https://www.roessland.com/>
-&copy; Andreas Røssland 2021
+&copy; Andreas Røssland 2022
 </a>
 <div>
 <div class=ananke-socials>
