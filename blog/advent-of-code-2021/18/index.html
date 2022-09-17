@@ -1,493 +1,383 @@
-<!doctype html><html lang=en>
-<head>
-<meta charset=utf-8>
-<meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
-<title>Advent of Code 2021 Day 18: Snailfish | Brain Dump</title>
-<meta name=viewport content="width=device-width,minimum-scale=1">
-<meta name=description content="Tree-traversal for snailfish number calculation purposes.">
-<meta name=generator content="Hugo 0.89.4">
-<meta name=ROBOTS content="NOINDEX, NOFOLLOW">
-<link rel=stylesheet href=/ananke/css/main.min.css>
-<meta property="og:title" content="Advent of Code 2021 Day 18: Snailfish">
-<meta property="og:description" content="Tree-traversal for snailfish number calculation purposes.">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://www.roessland.com/blog/advent-of-code-2021/18/"><meta property="article:section" content="blog">
-<meta property="article:published_time" content="2021-12-18T00:00:00+00:00">
-<meta property="article:modified_time" content="2021-12-18T00:00:00+00:00">
-<meta itemprop=name content="Advent of Code 2021 Day 18: Snailfish">
-<meta itemprop=description content="Tree-traversal for snailfish number calculation purposes."><meta itemprop=datePublished content="2021-12-18T00:00:00+00:00">
-<meta itemprop=dateModified content="2021-12-18T00:00:00+00:00">
-<meta itemprop=wordCount content="1302">
-<meta itemprop=keywords content><meta name=twitter:card content="summary">
-<meta name=twitter:title content="Advent of Code 2021 Day 18: Snailfish">
-<meta name=twitter:description content="Tree-traversal for snailfish number calculation purposes.">
-<script src=https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.13.4/mermaid.min.js integrity="sha512-JERecFUBbsm75UpkVheAuDOE8NdHjQBrPACfEQYPwvPG+fjgCpHAz1Jw2ci9EXmd3DdfiWth3O3CQvcfEg8gsA==" crossorigin=anonymous referrerpolicy=no-referrer></script>
-<script type=text/javascript src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script>window.addEventListener('DOMContentLoaded',function(){let a=document.getElementsByClassName("language-mermaid");for(let b of a){let c=b.parentElement;c.before(b),c.remove()}mermaid.init(void 0,".language-mermaid")}),MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['[',']']],processEscapes:!0,processEnvironments:!0,skipTags:['script','noscript','style','textarea','pre'],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}})</script>
-</head>
-<body class="ma0 avenir bg-near-white">
-<header>
-<div class=bg-black>
-<nav class="pv3 ph3 ph4-ns" role=navigation>
-<div class="flex-l justify-between items-center center">
-<a href=/ class="f3 fw2 hover-white no-underline white-90 dib">
-Brain Dump
-</a>
-<div class="flex-l items-center">
-<div class=ananke-socials>
-<a href=https://github.com/roessland target=_blank class="github ananke-social-link link-transition stackoverflow link dib z-999 pt3 pt0-l mr1" title="GitHub link" rel=noopener aria-label="follow on GitHub——Opens in a new window">
-<span class=icon><svg height="50" style="enable-background:new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M256 32C132.3 32 32 134.8 32 261.7c0 101.5 64.2 187.5 153.2 217.9 11.2 2.1 15.3-5 15.3-11.1.0-5.5-.2-19.9-.3-39.1-62.3 13.9-75.5-30.8-75.5-30.8-10.2-26.5-24.9-33.6-24.9-33.6-20.3-14.3 1.5-14 1.5-14 22.5 1.6 34.3 23.7 34.3 23.7 20 35.1 52.4 25 65.2 19.1 2-14.8 7.8-25 14.2-30.7-49.7-5.8-102-25.5-102-113.5.0-25.1 8.7-45.6 23-61.6-2.3-5.8-10-29.2 2.2-60.8.0.0 18.8-6.2 61.6 23.5 17.9-5.1 37-7.6 56.1-7.7 19 .1 38.2 2.6 56.1 7.7 42.8-29.7 61.5-23.5 61.5-23.5 12.2 31.6 4.5 55 2.2 60.8 14.3 16.1 23 36.6 23 61.6.0 88.2-52.4 107.6-102.3 113.3 8 7.1 15.2 21.1 15.2 42.5.0 30.7-.3 55.5-.3 63 0 6.1 4 13.3 15.4 11C415.9 449.1 480 363.1 480 261.7 480 134.8 379.7 32 256 32z"/></svg>
-</span>
-<span class=new-window><svg height="8" style="enable-background:new 0 0 1000 1000" viewBox="0 0 1e3 1e3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M598 128h298v298h-86V274L392 692l-60-60 418-418H598v-86zM810 810V512h86v298c0 46-40 86-86 86H214c-48 0-86-40-86-86V214c0-46 38-86 86-86h298v86H214v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:"/></svg>
-</span></a>
-</div>
-</div>
-</div>
-</nav>
-</div>
-</header>
-<main class=pb7 role=main>
-<article class="flex-l flex-wrap justify-between mw8 center ph3">
-<header class="mt4 w-100">
-<aside class="instapaper_ignoref b helvetica tracked">
-BLOGS
-</aside>
-<div id=sharing class="mt3 ananke-socials">
-</div>
-<h1 class="f1 athelas mt3 mb1">Advent of Code 2021 Day 18: Snailfish</h1>
-<p class=tracked>
-By <strong>
-Andreas Røssland
-</strong>
-</p>
-<time class="f6 mv4 dib tracked" datetime=2021-12-18T00:00:00Z>December 18, 2021</time>
-</header>
-<div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p><a href=https://adventofcode.com/2021/day/18>https://adventofcode.com/2021/day/18</a>
-<a href=https://github.com/roessland/advent-of-code>https://github.com/roessland/advent-of-code</a></p>
-<p>This one was pretty tricky. I had to write a ton of tests to figure out the bugs in my program. (The trickiest one was related to forgetting to update the <code>parent</code> pointer.)</p>
-<h3 id=tree-data-structure>Tree data structure</h3>
-<p>Parsing the input: It really looks like a tree structure will work here, so I use the builtin JSON decoder to create an untyped tree (<code>interface{}</code>), and then convert that tree to a proper type.</p>
-<p>I came up with the following type:</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Number</span> <span style=color:#66d9ef>struct</span> {
-	<span style=color:#a6e22e>parent</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>
-	<span style=color:#a6e22e>value</span>  <span style=color:#66d9ef>int</span>
-	<span style=color:#a6e22e>left</span>   <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>
-	<span style=color:#a6e22e>right</span>  <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>
-}
-</code></pre></div><p>Go lacks <a href=https://en.wikipedia.org/wiki/Tagged_union>sum/union types</a>, so this was the best I could do. Instead the type contains both left/right pointers <em>and</em> a value, but the value is only valid if both left and right are <code>nil</code>.</p>
-<pre tabindex=0><code class=language-mermaid data-lang=mermaid>graph TD;
-*[&quot;[[1,2],[[3,4],5]]&quot;]---&gt;|L|12
+<!doctype html><html lang=en><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>Advent of Code 2021 Day 18: Snailfish | Brain Dump</title><meta name=viewport content="width=device-width,minimum-scale=1"><meta name=description content="Tree-traversal for snailfish number calculation purposes."><meta name=generator content="Hugo 0.103.0"><meta name=ROBOTS content="NOINDEX, NOFOLLOW"><link rel=stylesheet href=/ananke/css/main.min.css><meta property="og:title" content="Advent of Code 2021 Day 18: Snailfish"><meta property="og:description" content="Tree-traversal for snailfish number calculation purposes."><meta property="og:type" content="article"><meta property="og:url" content="https://www.roessland.com/blog/advent-of-code-2021/18/"><meta property="article:section" content="blog"><meta property="article:published_time" content="2021-12-18T00:00:00+00:00"><meta property="article:modified_time" content="2021-12-18T00:00:00+00:00"><meta itemprop=name content="Advent of Code 2021 Day 18: Snailfish"><meta itemprop=description content="Tree-traversal for snailfish number calculation purposes."><meta itemprop=datePublished content="2021-12-18T00:00:00+00:00"><meta itemprop=dateModified content="2021-12-18T00:00:00+00:00"><meta itemprop=wordCount content="1302"><meta itemprop=keywords content><meta name=twitter:card content="summary"><meta name=twitter:title content="Advent of Code 2021 Day 18: Snailfish"><meta name=twitter:description content="Tree-traversal for snailfish number calculation purposes."><script src=https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.13.4/mermaid.min.js integrity="sha512-JERecFUBbsm75UpkVheAuDOE8NdHjQBrPACfEQYPwvPG+fjgCpHAz1Jw2ci9EXmd3DdfiWth3O3CQvcfEg8gsA==" crossorigin=anonymous referrerpolicy=no-referrer></script>
+<script>window.addEventListener("DOMContentLoaded",function(){let e=document.getElementsByClassName("language-mermaid");for(let t of e){let n=t.parentElement;n.before(t),n.remove()}mermaid.init(void 0,".language-mermaid")}),MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]],displayMath:[["$$","$$"],["\\[","\\]"]],processEscapes:!0,processEnvironments:!0},options:{skipHtmlTags:["script","noscript","style","textarea","pre"]},svg:{fontCache:"global"}}</script><script type=text/javascript id=MathJax-script async src=https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js></script></head><body class="ma0 avenir bg-near-white"><header><div class=bg-black><nav class="pv3 ph3 ph4-ns" role=navigation><div class="flex-l justify-between items-center center"><a href=/ class="f3 fw2 hover-white no-underline white-90 dib">Brain Dump</a><div class="flex-l items-center"><div class=ananke-socials><a href=https://github.com/roessland target=_blank class="github ananke-social-link link-transition stackoverflow link dib z-999 pt3 pt0-l mr1" title="GitHub link" rel=noopener aria-label="follow on GitHub——Opens in a new window"><span class=icon><svg height="50" style="enable-background:new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M256 32C132.3 32 32 134.8 32 261.7c0 101.5 64.2 187.5 153.2 217.9 11.2 2.1 15.3-5 15.3-11.1.0-5.5-.2-19.9-.3-39.1-62.3 13.9-75.5-30.8-75.5-30.8-10.2-26.5-24.9-33.6-24.9-33.6-20.3-14.3 1.5-14 1.5-14 22.5 1.6 34.3 23.7 34.3 23.7 20 35.1 52.4 25 65.2 19.1 2-14.8 7.8-25 14.2-30.7-49.7-5.8-102-25.5-102-113.5.0-25.1 8.7-45.6 23-61.6-2.3-5.8-10-29.2 2.2-60.8.0.0 18.8-6.2 61.6 23.5 17.9-5.1 37-7.6 56.1-7.7 19 .1 38.2 2.6 56.1 7.7 42.8-29.7 61.5-23.5 61.5-23.5 12.2 31.6 4.5 55 2.2 60.8 14.3 16.1 23 36.6 23 61.6.0 88.2-52.4 107.6-102.3 113.3 8 7.1 15.2 21.1 15.2 42.5.0 30.7-.3 55.5-.3 63 0 6.1 4 13.3 15.4 11C415.9 449.1 480 363.1 480 261.7 480 134.8 379.7 32 256 32z"/></svg></span><span class=new-window><svg height="8" style="enable-background:new 0 0 1000 1000" viewBox="0 0 1e3 1e3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M598 128h298v298h-86V274L392 692l-60-60 418-418H598v-86zM810 810V512h86v298c0 46-40 86-86 86H214c-48 0-86-40-86-86V214c0-46 38-86 86-86h298v86H214v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:"/></svg></span></a></div></div></div></nav></div></header><main class=pb7 role=main><article class="flex-l flex-wrap justify-between mw8 center ph3"><header class="mt4 w-100"><aside class="instapaper_ignoref b helvetica tracked">BLOGS</aside><div id=sharing class="mt3 ananke-socials"></div><h1 class="f1 athelas mt3 mb1">Advent of Code 2021 Day 18: Snailfish</h1><p class=tracked>By <strong>Andreas Røssland</strong></p><time class="f6 mv4 dib tracked" datetime=2021-12-18T00:00:00Z>December 18, 2021</time></header><div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p><a href=https://adventofcode.com/2021/day/18>https://adventofcode.com/2021/day/18</a>
+<a href=https://github.com/roessland/advent-of-code>https://github.com/roessland/advent-of-code</a></p><p>This one was pretty tricky. I had to write a ton of tests to figure out the bugs in my program. (The trickiest one was related to forgetting to update the <code>parent</code> pointer.)</p><h3 id=tree-data-structure>Tree data structure</h3><p>Parsing the input: It really looks like a tree structure will work here, so I use the builtin JSON decoder to create an untyped tree (<code>interface{}</code>), and then convert that tree to a proper type.</p><p>I came up with the following type:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Number</span> <span style=color:#66d9ef>struct</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>parent</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>value</span>  <span style=color:#66d9ef>int</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>left</span>   <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>right</span>  <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>Go lacks <a href=https://en.wikipedia.org/wiki/Tagged_union>sum/union types</a>, so this was the best I could do. Instead the type contains both left/right pointers <em>and</em> a value, but the value is only valid if both left and right are <code>nil</code>.</p><pre tabindex=0><code class=language-mermaid data-lang=mermaid>graph TD;
+*[&#34;[[1,2],[[3,4],5]]&#34;]---&gt;|L|12
 *--&gt;|R|345
 12--&gt;|L|1
-12[&quot;[1,2]&quot;]--&gt;|R|2
-345[&quot;[3,4],5]&quot;]--&gt;|L|34
-	34[&quot;[3,4]&quot;]--&gt;|L|3
+12[&#34;[1,2]&#34;]--&gt;|R|2
+345[&#34;[3,4],5]&#34;]--&gt;|L|34
+	34[&#34;[3,4]&#34;]--&gt;|L|3
 	34--&gt;|R|4
 345---&gt;|R|5
-</code></pre><p>I decided to parse the input as JSON, and then convert the JSON tree to a properly typed tree. Note that recursion works fine for anonymous functions; you just have to declare the type first.</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>FromString</span>(<span style=color:#a6e22e>str</span> <span style=color:#66d9ef>string</span>) <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span> {
-	<span style=color:#66d9ef>var</span> <span style=color:#a6e22e>v</span> []<span style=color:#66d9ef>interface</span>{}
-	<span style=color:#a6e22e>decoder</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>json</span>.<span style=color:#a6e22e>NewDecoder</span>(<span style=color:#a6e22e>strings</span>.<span style=color:#a6e22e>NewReader</span>(<span style=color:#a6e22e>str</span>))
-	<span style=color:#a6e22e>decoder</span>.<span style=color:#a6e22e>UseNumber</span>()
-	<span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>decoder</span>.<span style=color:#a6e22e>Decode</span>(<span style=color:#f92672>&amp;</span><span style=color:#a6e22e>v</span>)
-	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
-		<span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>Fatal</span>(<span style=color:#a6e22e>err</span>)
-	}
-	<span style=color:#66d9ef>var</span> <span style=color:#a6e22e>f</span> <span style=color:#66d9ef>func</span>(<span style=color:#66d9ef>interface</span>{}, <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>) <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>
-	<span style=color:#a6e22e>f</span> = <span style=color:#66d9ef>func</span>(<span style=color:#a6e22e>listOrInt</span> <span style=color:#66d9ef>interface</span>{}, <span style=color:#a6e22e>parent</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>) <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span> {
-		<span style=color:#66d9ef>switch</span> <span style=color:#a6e22e>v</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>listOrInt</span>.(<span style=color:#66d9ef>type</span>) {
-		<span style=color:#66d9ef>case</span> <span style=color:#a6e22e>json</span>.<span style=color:#a6e22e>Number</span>:
-			<span style=color:#a6e22e>n</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>strconv</span>.<span style=color:#a6e22e>Atoi</span>(string(<span style=color:#a6e22e>v</span>))
-			<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
-				panic(<span style=color:#a6e22e>err</span>)
-			}
-			<span style=color:#66d9ef>return</span> <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>Number</span>{<span style=color:#a6e22e>value</span>: <span style=color:#a6e22e>n</span>, <span style=color:#a6e22e>parent</span>: <span style=color:#a6e22e>parent</span>}
-		<span style=color:#66d9ef>case</span> []<span style=color:#66d9ef>interface</span>{}:
-			<span style=color:#a6e22e>n</span> <span style=color:#f92672>:=</span> <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>Number</span>{<span style=color:#a6e22e>parent</span>: <span style=color:#a6e22e>parent</span>}
-			<span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>left</span> = <span style=color:#a6e22e>f</span>(<span style=color:#a6e22e>v</span>[<span style=color:#ae81ff>0</span>], <span style=color:#a6e22e>n</span>)
-			<span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>right</span> = <span style=color:#a6e22e>f</span>(<span style=color:#a6e22e>v</span>[<span style=color:#ae81ff>1</span>], <span style=color:#a6e22e>n</span>)
-			<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>n</span>
-		<span style=color:#66d9ef>default</span>:
-			<span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>Fatalf</span>(<span style=color:#e6db74>&#34;unknown type %T&#34;</span>, <span style=color:#a6e22e>v</span>)
-		}
-		<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>nil</span>
-	}
-	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>f</span>(<span style=color:#a6e22e>v</span>, <span style=color:#66d9ef>nil</span>)
-}
-</code></pre></div><p>Another data structure that might be worth exploring for this problem is a <a href=https://en.wikipedia.org/wiki/Zipper_(data_structure)>zipper</a>.</p>
-<h3 id=addition>Addition</h3>
-<p>Addition of snailfish numbers is defined as concatenating two numbers into a new list, and then reducing the result.</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>n</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>) <span style=color:#a6e22e>Add</span>(<span style=color:#a6e22e>m</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>) <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span> {
-	<span style=color:#a6e22e>sum</span> <span style=color:#f92672>:=</span> <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>Number</span>{<span style=color:#a6e22e>left</span>: <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>Copy</span>(), <span style=color:#a6e22e>right</span>: <span style=color:#a6e22e>m</span>.<span style=color:#a6e22e>Copy</span>()}
-	<span style=color:#a6e22e>sum</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>parent</span> = <span style=color:#a6e22e>sum</span>
-	<span style=color:#a6e22e>sum</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>parent</span> = <span style=color:#a6e22e>sum</span>
-	<span style=color:#a6e22e>sum</span>.<span style=color:#a6e22e>Reduce</span>()
-	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>sum</span>
-}
-</code></pre></div><p>Copies are used to avoid mutating the input. I added that when I saw Part 2 and realized that numbers must be used multiple times, so it&rsquo;s a bad idea to modify them in-place.</p>
-<h3 id=reduction>Reduction</h3>
-<p>Just try exploding or splitting until there is nothing left to explode or split. If something was exploded, try exploding again.</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>n</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>) <span style=color:#a6e22e>Reduce</span>() {
-	<span style=color:#66d9ef>for</span> {
-		<span style=color:#a6e22e>explodable</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>findExplodable</span>(<span style=color:#ae81ff>0</span>)
-		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>explodable</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
-			<span style=color:#a6e22e>explodable</span>.<span style=color:#a6e22e>Explode</span>()
-			<span style=color:#66d9ef>continue</span>
-		}
-
-		<span style=color:#a6e22e>splittable</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>findSplittable</span>()
-		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>splittable</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
-			<span style=color:#a6e22e>splittable</span>.<span style=color:#a6e22e>Split</span>()
-			<span style=color:#66d9ef>continue</span>
-		}
-		<span style=color:#66d9ef>break</span>
-	}
-}
-</code></pre></div><h3 id=splitting>Splitting</h3>
-<p>Walk through the leaf nodes in left to right order, and return the first number that is too high (&ldquo;splittable&rdquo;), then replace that number with a new pair.</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>n</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>) <span style=color:#a6e22e>findSplittable</span>() <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span> {
-	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>n</span> <span style=color:#f92672>==</span> <span style=color:#66d9ef>nil</span> {
-		<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>nil</span>
-	}
-	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>leftSplittable</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>findSplittable</span>(); <span style=color:#a6e22e>leftSplittable</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
-		<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>leftSplittable</span>
-	}
-	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>value</span> <span style=color:#f92672>&gt;=</span> <span style=color:#ae81ff>10</span> {
-		<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>n</span>
-	}
-	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>rightSplittable</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>findSplittable</span>(); <span style=color:#a6e22e>rightSplittable</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
-		<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>rightSplittable</span>
-	}
-	<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>nil</span>
-}
-
-<span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>n</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>) <span style=color:#a6e22e>Split</span>() {
-	<span style=color:#a6e22e>down</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>value</span> <span style=color:#f92672>/</span> <span style=color:#ae81ff>2</span>
-	<span style=color:#a6e22e>up</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>value</span> <span style=color:#f92672>/</span> <span style=color:#ae81ff>2</span>
-	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>value</span><span style=color:#f92672>%</span><span style=color:#ae81ff>2</span> <span style=color:#f92672>==</span> <span style=color:#ae81ff>1</span> {
-		<span style=color:#a6e22e>up</span><span style=color:#f92672>++</span>
-	}
-	<span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>left</span> = <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>Number</span>{<span style=color:#a6e22e>value</span>: <span style=color:#a6e22e>down</span>, <span style=color:#a6e22e>parent</span>: <span style=color:#a6e22e>n</span>}
-	<span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>right</span> = <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>Number</span>{<span style=color:#a6e22e>value</span>: <span style=color:#a6e22e>up</span>, <span style=color:#a6e22e>parent</span>: <span style=color:#a6e22e>n</span>}
-	<span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>value</span> = <span style=color:#ae81ff>0</span>
-}
-</code></pre></div><h3 id=exploding>Exploding</h3>
-<p>Exploding a pair wasn&rsquo;t too bad to implement after left/right traversal was working.</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go>
-<span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>n</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>) <span style=color:#a6e22e>findExplodable</span>(<span style=color:#a6e22e>level</span> <span style=color:#66d9ef>int</span>) <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span> {
-	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>n</span> <span style=color:#f92672>==</span> <span style=color:#66d9ef>nil</span> <span style=color:#f92672>||</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>HasValue</span>() {
-		<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>nil</span>
-	}
-	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>level</span> <span style=color:#f92672>==</span> <span style=color:#ae81ff>4</span> {
-		<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>n</span>
-	}
-	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>leftExplodable</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>findExplodable</span>(<span style=color:#a6e22e>level</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>); <span style=color:#a6e22e>leftExplodable</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
-		<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>leftExplodable</span>
-	}
-	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>rightExplodable</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>findExplodable</span>(<span style=color:#a6e22e>level</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>); <span style=color:#a6e22e>rightExplodable</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
-		<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>rightExplodable</span>
-	}
-	<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>nil</span>
-}
-
-<span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>n</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>) <span style=color:#a6e22e>Explode</span>() {
-	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>left</span> <span style=color:#f92672>==</span> <span style=color:#66d9ef>nil</span> <span style=color:#f92672>||</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>right</span> <span style=color:#f92672>==</span> <span style=color:#66d9ef>nil</span> {
-		panic(<span style=color:#e6db74>&#34;cannot explode number without left and right&#34;</span>)
-	}
-	<span style=color:#a6e22e>leftInorder</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>findLeft</span>()
-	<span style=color:#a6e22e>rightInorder</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>findRight</span>()
-	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>leftInorder</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
-		<span style=color:#a6e22e>leftInorder</span>.<span style=color:#a6e22e>value</span> <span style=color:#f92672>+=</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>value</span>
-	}
-	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>rightInorder</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
-		<span style=color:#a6e22e>rightInorder</span>.<span style=color:#a6e22e>value</span> <span style=color:#f92672>+=</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>value</span>
-	}
-	<span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>left</span> = <span style=color:#66d9ef>nil</span>
-	<span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>right</span> = <span style=color:#66d9ef>nil</span>
-	<span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>value</span> = <span style=color:#ae81ff>0</span>
-}
-</code></pre></div><h3 id=leftright-leaf-node-traversal>Left/right leaf node traversal</h3>
-<p>I came up with an algorithm where you start on the exploding number, then traverse up until there is a left branch, follow that left branch, then follow only right branches until a literal number is found. Make two such functions, one for left and one for right.</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>n</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>) <span style=color:#a6e22e>findLeft</span>() <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span> {
-	<span style=color:#75715e>// Move up until some node has a left branch
-</span><span style=color:#75715e></span>	<span style=color:#66d9ef>for</span> {
-		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>parent</span> <span style=color:#f92672>==</span> <span style=color:#66d9ef>nil</span> {
-			<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>nil</span>
-		}
-		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>parent</span>.<span style=color:#a6e22e>left</span> <span style=color:#f92672>!=</span> <span style=color:#a6e22e>n</span> <span style=color:#f92672>&amp;&amp;</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>parent</span>.<span style=color:#a6e22e>left</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
-			<span style=color:#a6e22e>n</span> = <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>parent</span>.<span style=color:#a6e22e>left</span>
-			<span style=color:#66d9ef>break</span>
-		}
-		<span style=color:#a6e22e>n</span> = <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>parent</span>
-	}
-	<span style=color:#75715e>// Move down all right branches until a value is found
-</span><span style=color:#75715e></span>	<span style=color:#66d9ef>for</span> !<span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>HasValue</span>() {
-		<span style=color:#a6e22e>n</span> = <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>right</span>
-	}
-	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>n</span>
-}
-
-<span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>n</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>) <span style=color:#a6e22e>findRight</span>() <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span> {
-	<span style=color:#75715e>// ...
-</span><span style=color:#75715e></span>}
-</code></pre></div><h3 id=the-rest-of-the-code>The rest of the code</h3>
-<p>This runs in about 30 ms in total for part 1 and part 2.</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
-
-<span style=color:#f92672>import</span> (
-	<span style=color:#e6db74>&#34;bufio&#34;</span>
-	<span style=color:#e6db74>&#34;encoding/json&#34;</span>
-	<span style=color:#e6db74>&#34;fmt&#34;</span>
-	<span style=color:#e6db74>&#34;github.com/roessland/gopkg/mathutil&#34;</span>
-	<span style=color:#e6db74>&#34;log&#34;</span>
-	<span style=color:#e6db74>&#34;os&#34;</span>
-	<span style=color:#e6db74>&#34;strconv&#34;</span>
-	<span style=color:#e6db74>&#34;strings&#34;</span>
-	<span style=color:#e6db74>&#34;time&#34;</span>
-)
-
-<span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>n</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>) <span style=color:#a6e22e>Copy</span>() <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span> {
-	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>n</span> <span style=color:#f92672>==</span> <span style=color:#66d9ef>nil</span> {
-		<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>nil</span>
-	}
-	<span style=color:#a6e22e>c</span> <span style=color:#f92672>:=</span> <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>Number</span>{}
-	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>HasValue</span>() {
-		<span style=color:#a6e22e>c</span>.<span style=color:#a6e22e>value</span> = <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>value</span>
-	} <span style=color:#66d9ef>else</span> {
-		<span style=color:#a6e22e>c</span>.<span style=color:#a6e22e>left</span> = <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>Copy</span>()
-		<span style=color:#a6e22e>c</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>parent</span> = <span style=color:#a6e22e>c</span>
-		<span style=color:#a6e22e>c</span>.<span style=color:#a6e22e>right</span> = <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>Copy</span>()
-		<span style=color:#a6e22e>c</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>parent</span> = <span style=color:#a6e22e>c</span>
-	}
-	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>c</span>
-}
-
-<span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>n</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>) <span style=color:#a6e22e>HasValue</span>() <span style=color:#66d9ef>bool</span> {
-	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>left</span> <span style=color:#f92672>==</span> <span style=color:#66d9ef>nil</span> <span style=color:#f92672>&amp;&amp;</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>right</span> <span style=color:#f92672>==</span> <span style=color:#66d9ef>nil</span>
-}
-
-<span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>n</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>) <span style=color:#a6e22e>String</span>() <span style=color:#66d9ef>string</span> {
-	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>HasValue</span>() {
-		<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Sprintf</span>(<span style=color:#e6db74>&#34;%d&#34;</span>, <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>value</span>)
-	} <span style=color:#66d9ef>else</span> {
-		<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Sprintf</span>(<span style=color:#e6db74>&#34;[%s,%s]&#34;</span>, <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>String</span>(), <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>String</span>())
-	}
-}
-
-
-<span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>n</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>) <span style=color:#a6e22e>Magnitude</span>() <span style=color:#66d9ef>int</span> {
-	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>HasValue</span>() {
-		<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>value</span>
-	}
-	<span style=color:#66d9ef>return</span> <span style=color:#ae81ff>3</span><span style=color:#f92672>*</span><span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>Magnitude</span>() <span style=color:#f92672>+</span> <span style=color:#ae81ff>2</span><span style=color:#f92672>*</span><span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>Magnitude</span>()
-}
-
-<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
-	<span style=color:#a6e22e>t0</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Now</span>()
-	<span style=color:#a6e22e>part1</span>()
-	<span style=color:#a6e22e>part2</span>()
-	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Since</span>(<span style=color:#a6e22e>t0</span>))
-}
-
-<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>part1</span>() {
-	<span style=color:#a6e22e>nums</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>ReadInput</span>()
-	<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>i</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>1</span>; <span style=color:#a6e22e>i</span> &lt; len(<span style=color:#a6e22e>nums</span>); <span style=color:#a6e22e>i</span><span style=color:#f92672>++</span> {
-		<span style=color:#a6e22e>nums</span>[<span style=color:#ae81ff>0</span>] = <span style=color:#a6e22e>nums</span>[<span style=color:#ae81ff>0</span>].<span style=color:#a6e22e>Add</span>(<span style=color:#a6e22e>nums</span>[<span style=color:#a6e22e>i</span>])
-	}
-	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Part 1:&#34;</span>, <span style=color:#a6e22e>nums</span>[<span style=color:#ae81ff>0</span>].<span style=color:#a6e22e>Magnitude</span>())
-}
-
-<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>part2</span>() {
-	<span style=color:#a6e22e>nums</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>ReadInput</span>()
-	<span style=color:#a6e22e>maxMagnitude</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0</span>
-	<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>i</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0</span>; <span style=color:#a6e22e>i</span> &lt; len(<span style=color:#a6e22e>nums</span>); <span style=color:#a6e22e>i</span><span style=color:#f92672>++</span> {
-		<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>j</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0</span>; <span style=color:#a6e22e>j</span> &lt; len(<span style=color:#a6e22e>nums</span>); <span style=color:#a6e22e>j</span><span style=color:#f92672>++</span> {
-			<span style=color:#a6e22e>magnitude</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>nums</span>[<span style=color:#a6e22e>i</span>].<span style=color:#a6e22e>Add</span>(<span style=color:#a6e22e>nums</span>[<span style=color:#a6e22e>j</span>]).<span style=color:#a6e22e>Magnitude</span>()
-			<span style=color:#a6e22e>maxMagnitude</span> = <span style=color:#a6e22e>mathutil</span>.<span style=color:#a6e22e>MaxInt</span>(<span style=color:#a6e22e>maxMagnitude</span>, <span style=color:#a6e22e>magnitude</span>)
-		}
-
-	}
-	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Part 2:&#34;</span>, <span style=color:#a6e22e>maxMagnitude</span>)
-}
-
-<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>ReadInput</span>() []<span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span> {
-	<span style=color:#a6e22e>f</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>os</span>.<span style=color:#a6e22e>Open</span>(<span style=color:#e6db74>&#34;input.txt&#34;</span>)
-	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
-		panic(<span style=color:#a6e22e>err</span>)
-	}
-	<span style=color:#a6e22e>scanner</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>bufio</span>.<span style=color:#a6e22e>NewScanner</span>(<span style=color:#a6e22e>f</span>)
-	<span style=color:#66d9ef>var</span> <span style=color:#a6e22e>nums</span> []<span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>
-	<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>scanner</span>.<span style=color:#a6e22e>Scan</span>() {
-		<span style=color:#a6e22e>num</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>FromString</span>(<span style=color:#a6e22e>scanner</span>.<span style=color:#a6e22e>Text</span>())
-		<span style=color:#a6e22e>nums</span> = append(<span style=color:#a6e22e>nums</span>, <span style=color:#a6e22e>num</span>)
-	}
-	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>nums</span>
-}
-</code></pre></div><h2 id=appendix-tests>Appendix: Tests</h2>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
-
-<span style=color:#f92672>import</span> (
-	<span style=color:#e6db74>&#34;github.com/stretchr/testify/require&#34;</span>
-	<span style=color:#e6db74>&#34;testing&#34;</span>
-)
-
-<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>TestParse12</span>(<span style=color:#a6e22e>t</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>testing</span>.<span style=color:#a6e22e>T</span>) {
-	<span style=color:#a6e22e>num</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>FromString</span>(<span style=color:#e6db74>&#34;[1,2]&#34;</span>)
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>NotNil</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>num</span>)
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#ae81ff>0</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>value</span>)
-
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>NotNil</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>left</span>)
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#ae81ff>1</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>value</span>)
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Nil</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>left</span>)
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Nil</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>right</span>)
-
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>NotNil</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>right</span>)
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#ae81ff>2</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>value</span>)
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Nil</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>left</span>)
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Nil</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>right</span>)
-
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>num</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>parent</span>)
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>num</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>parent</span>)
-}
-
-<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>TestParseBigDude</span>(<span style=color:#a6e22e>t</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>testing</span>.<span style=color:#a6e22e>T</span>) {
-	<span style=color:#a6e22e>num</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>FromString</span>(<span style=color:#e6db74>&#34;[[[[1,3],[5,3]],[[1,3],[8,7]]],[[[4,9],[6,9]],[[8,2],[7,3]]]]&#34;</span>)
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#ae81ff>6</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>value</span>)
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>num</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>parent</span>.<span style=color:#a6e22e>parent</span>.<span style=color:#a6e22e>parent</span>.<span style=color:#a6e22e>parent</span>)
-}
-
-<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>TestReduce</span>(<span style=color:#a6e22e>t</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>testing</span>.<span style=color:#a6e22e>T</span>) {
-	<span style=color:#a6e22e>num</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>FromString</span>(<span style=color:#e6db74>&#34;[[[[[9,8],1],2],3],4]&#34;</span>)
-	<span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>Reduce</span>()
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#ae81ff>9</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>value</span>)
-
-	<span style=color:#a6e22e>num</span> = <span style=color:#a6e22e>FromString</span>(<span style=color:#e6db74>&#34;[7,[6,[5,[4,[3,2]]]]]&#34;</span>)
-	<span style=color:#a6e22e>expectExplodable</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>FromString</span>(<span style=color:#e6db74>&#34;[3,2]&#34;</span>)
-	<span style=color:#a6e22e>explodable</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>findExplodable</span>(<span style=color:#ae81ff>0</span>)
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>NotNil</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>explodable</span>, <span style=color:#e6db74>&#34;didnt find explodable&#34;</span>)
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>expectExplodable</span>.<span style=color:#a6e22e>String</span>(), <span style=color:#a6e22e>explodable</span>.<span style=color:#a6e22e>String</span>())
-	<span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>Reduce</span>() <span style=color:#75715e>// [7,[6,[5,[7,0]]]]
-</span><span style=color:#75715e></span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#ae81ff>7</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>value</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>String</span>())
-
-	<span style=color:#a6e22e>num</span> = <span style=color:#a6e22e>FromString</span>(<span style=color:#e6db74>&#34;[[6,[5,[4,[3,2]]]],1]&#34;</span>)
-	<span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>Reduce</span>() <span style=color:#75715e>// [[6,[5,[7,0]]],3]
-</span><span style=color:#75715e></span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#e6db74>&#34;[7,0]&#34;</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>String</span>())
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#ae81ff>3</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>value</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>String</span>())
-
-	<span style=color:#a6e22e>num</span> = <span style=color:#a6e22e>FromString</span>(<span style=color:#e6db74>&#34;[[3,[2,[1,[7,3]]]],[6,[5,[4,[3,2]]]]]&#34;</span>)
-	<span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>Reduce</span>() <span style=color:#75715e>// [[3,[2,[8,0]]],[9,[5,[4,[3,2]]]]]
-</span><span style=color:#75715e></span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#e6db74>&#34;[8,0]&#34;</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>String</span>())
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#ae81ff>9</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>value</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>String</span>())
-
-	<span style=color:#a6e22e>num1</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>FromString</span>(<span style=color:#e6db74>&#34;[[[[4,3],4],4],[7,[[8,4],9]]]&#34;</span>)
-	<span style=color:#a6e22e>num2</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>FromString</span>(<span style=color:#e6db74>&#34;[1,1]&#34;</span>)
-	<span style=color:#a6e22e>num</span> = <span style=color:#a6e22e>num1</span>.<span style=color:#a6e22e>Add</span>(<span style=color:#a6e22e>num2</span>)
-	<span style=color:#a6e22e>expect</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>FromString</span>(<span style=color:#e6db74>&#34;[[[[0,7],4],[[7,8],[6,0]]],[8,1]]&#34;</span>)
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>expect</span>.<span style=color:#a6e22e>String</span>(), <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>String</span>())
-}
-
-<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>TestExplode</span>(<span style=color:#a6e22e>t</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>testing</span>.<span style=color:#a6e22e>T</span>) {
-	<span style=color:#a6e22e>num</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>FromString</span>(<span style=color:#e6db74>&#34;[[[[[9,8],1],2],3],4]&#34;</span>)
-	<span style=color:#a6e22e>explodable</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>findExplodable</span>(<span style=color:#ae81ff>0</span>)
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>left</span>, <span style=color:#a6e22e>explodable</span>)
-
-	<span style=color:#a6e22e>expect</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>FromString</span>(<span style=color:#e6db74>&#34;[[[[0,9],2],3],4]&#34;</span>)
-	<span style=color:#a6e22e>explodable</span>.<span style=color:#a6e22e>Explode</span>()
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>expect</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>value</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>value</span>)
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>expect</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>value</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>value</span>)
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>expect</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>value</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>value</span>)
-
-	<span style=color:#a6e22e>num</span> = <span style=color:#a6e22e>FromString</span>(<span style=color:#e6db74>&#34;[[[[0,9],2],3],4]&#34;</span>)
-	<span style=color:#a6e22e>explodable</span> = <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>findExplodable</span>(<span style=color:#ae81ff>0</span>)
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Nil</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>explodable</span>)
-
-	<span style=color:#a6e22e>num</span> = <span style=color:#a6e22e>FromString</span>(<span style=color:#e6db74>&#34;[[[[0,7],4],[[7,8],[0,[6,7]]]],[1,1]]&#34;</span>)
-	<span style=color:#a6e22e>explodable</span> = <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>findExplodable</span>(<span style=color:#ae81ff>0</span>)
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#e6db74>&#34;[6,7]&#34;</span>, <span style=color:#a6e22e>explodable</span>.<span style=color:#a6e22e>String</span>())
-	<span style=color:#a6e22e>explodable</span>.<span style=color:#a6e22e>Explode</span>()
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>EqualValues</span>(<span style=color:#a6e22e>t</span>, <span style=color:#e6db74>&#34;[[[[0,7],4],[[7,8],[6,0]]],[8,1]]&#34;</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>String</span>())
-}
-
-<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>TestFindLeft</span>(<span style=color:#a6e22e>t</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>testing</span>.<span style=color:#a6e22e>T</span>) {
-	<span style=color:#a6e22e>num</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>FromString</span>(<span style=color:#e6db74>&#34;[[[[[9,8],1],2],3],4]&#34;</span>)
-
-	<span style=color:#a6e22e>explodable</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>findExplodable</span>(<span style=color:#ae81ff>0</span>)
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Nil</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>explodable</span>.<span style=color:#a6e22e>findLeft</span>())
-
-	<span style=color:#a6e22e>four</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>right</span>
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#ae81ff>3</span>, <span style=color:#a6e22e>four</span>.<span style=color:#a6e22e>findLeft</span>().<span style=color:#a6e22e>value</span>)
-
-	<span style=color:#a6e22e>three</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>right</span>
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#ae81ff>2</span>, <span style=color:#a6e22e>three</span>.<span style=color:#a6e22e>findLeft</span>().<span style=color:#a6e22e>value</span>)
-}
-
-<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>TestFindRight</span>(<span style=color:#a6e22e>t</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>testing</span>.<span style=color:#a6e22e>T</span>) {
-	<span style=color:#a6e22e>num</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>FromString</span>(<span style=color:#e6db74>&#34;[[[[[9,8],1],2],3],4]&#34;</span>)
-
-	<span style=color:#a6e22e>explodable</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>findExplodable</span>(<span style=color:#ae81ff>0</span>)
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#ae81ff>1</span>, <span style=color:#a6e22e>explodable</span>.<span style=color:#a6e22e>findRight</span>().<span style=color:#a6e22e>value</span>)
-
-	<span style=color:#a6e22e>four</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>right</span>
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Nil</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>four</span>.<span style=color:#a6e22e>findRight</span>())
-
-	<span style=color:#a6e22e>three</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>right</span>
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#ae81ff>4</span>, <span style=color:#a6e22e>three</span>.<span style=color:#a6e22e>findRight</span>().<span style=color:#a6e22e>value</span>)
-
-	<span style=color:#a6e22e>num</span> = <span style=color:#a6e22e>FromString</span>(<span style=color:#e6db74>&#34;[[[[0,7],4],[[7,8],[0,[6,7]]]],[1,1]]&#34;</span>)
-	<span style=color:#a6e22e>sixSeven</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>right</span>
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#e6db74>&#34;[6,7]&#34;</span>, <span style=color:#a6e22e>sixSeven</span>.<span style=color:#a6e22e>String</span>())
-	<span style=color:#a6e22e>one</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>sixSeven</span>.<span style=color:#a6e22e>findRight</span>()
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>NotNil</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>one</span>)
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>,<span style=color:#ae81ff>1</span>, <span style=color:#a6e22e>one</span>.<span style=color:#a6e22e>value</span>)
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#ae81ff>1</span>, <span style=color:#a6e22e>one</span>.<span style=color:#a6e22e>parent</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>value</span>)
-}
-
-<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>TestBlackMagic</span>(<span style=color:#a6e22e>t</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>testing</span>.<span style=color:#a6e22e>T</span>) {
-	<span style=color:#a6e22e>num</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>FromString</span>(<span style=color:#e6db74>&#34;[[[[[4,3],4],4],[7,[[8,4],9]]],[1,1]]&#34;</span>)
-
-	<span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>findExplodable</span>(<span style=color:#ae81ff>0</span>).<span style=color:#a6e22e>Explode</span>()
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#e6db74>&#34;[[[[0,7],4],[7,[[8,4],9]]],[1,1]]&#34;</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>String</span>())
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>num</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>parent</span>)
-
-	<span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>findExplodable</span>(<span style=color:#ae81ff>0</span>).<span style=color:#a6e22e>Explode</span>()
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#e6db74>&#34;[[[[0,7],4],[15,[0,13]]],[1,1]]&#34;</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>String</span>())
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>num</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>parent</span>)
-
-	<span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>findSplittable</span>().<span style=color:#a6e22e>Split</span>()
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#e6db74>&#34;[[[[0,7],4],[[7,8],[0,13]]],[1,1]]&#34;</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>String</span>())
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>num</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>parent</span>)
-
-	<span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>findSplittable</span>().<span style=color:#a6e22e>Split</span>()
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#e6db74>&#34;[[[[0,7],4],[[7,8],[0,[6,7]]]],[1,1]]&#34;</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>String</span>())
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>num</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>parent</span>)
-
-	<span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>findExplodable</span>(<span style=color:#ae81ff>0</span>).<span style=color:#a6e22e>Explode</span>()
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#e6db74>&#34;[[[[0,7],4],[[7,8],[6,0]]],[8,1]]&#34;</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>String</span>())
-	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>num</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>parent</span>)
-}
-</code></pre></div><ul class=pa0>
-</ul>
-<div class="mt6 instapaper_ignoref">
-</div>
-</div>
-<aside class="w-30-l mt6-l">
-</aside>
-</article>
-</main>
-<footer class="bg-black bottom-0 w-100 pa3" role=contentinfo>
-<div class="flex justify-between">
-<a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href=https://www.roessland.com/>
-&copy; Andreas Røssland 2022
-</a>
-<div>
-<div class=ananke-socials>
-<a href=https://github.com/roessland target=_blank class="github ananke-social-link link-transition stackoverflow link dib z-999 pt3 pt0-l mr1" title="GitHub link" rel=noopener aria-label="follow on GitHub——Opens in a new window">
-<span class=icon><svg height="50" style="enable-background:new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M256 32C132.3 32 32 134.8 32 261.7c0 101.5 64.2 187.5 153.2 217.9 11.2 2.1 15.3-5 15.3-11.1.0-5.5-.2-19.9-.3-39.1-62.3 13.9-75.5-30.8-75.5-30.8-10.2-26.5-24.9-33.6-24.9-33.6-20.3-14.3 1.5-14 1.5-14 22.5 1.6 34.3 23.7 34.3 23.7 20 35.1 52.4 25 65.2 19.1 2-14.8 7.8-25 14.2-30.7-49.7-5.8-102-25.5-102-113.5.0-25.1 8.7-45.6 23-61.6-2.3-5.8-10-29.2 2.2-60.8.0.0 18.8-6.2 61.6 23.5 17.9-5.1 37-7.6 56.1-7.7 19 .1 38.2 2.6 56.1 7.7 42.8-29.7 61.5-23.5 61.5-23.5 12.2 31.6 4.5 55 2.2 60.8 14.3 16.1 23 36.6 23 61.6.0 88.2-52.4 107.6-102.3 113.3 8 7.1 15.2 21.1 15.2 42.5.0 30.7-.3 55.5-.3 63 0 6.1 4 13.3 15.4 11C415.9 449.1 480 363.1 480 261.7 480 134.8 379.7 32 256 32z"/></svg>
-</span>
-<span class=new-window><svg height="8" style="enable-background:new 0 0 1000 1000" viewBox="0 0 1e3 1e3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M598 128h298v298h-86V274L392 692l-60-60 418-418H598v-86zM810 810V512h86v298c0 46-40 86-86 86H214c-48 0-86-40-86-86V214c0-46 38-86 86-86h298v86H214v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:"/></svg>
-</span></a>
-</div></div>
-</div>
-</footer>
-</body>
-</html>
+</code></pre><p>I decided to parse the input as JSON, and then convert the JSON tree to a properly typed tree. Note that recursion works fine for anonymous functions; you just have to declare the type first.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>FromString</span>(<span style=color:#a6e22e>str</span> <span style=color:#66d9ef>string</span>) <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span> {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>var</span> <span style=color:#a6e22e>v</span> []<span style=color:#66d9ef>interface</span>{}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>decoder</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>json</span>.<span style=color:#a6e22e>NewDecoder</span>(<span style=color:#a6e22e>strings</span>.<span style=color:#a6e22e>NewReader</span>(<span style=color:#a6e22e>str</span>))
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>decoder</span>.<span style=color:#a6e22e>UseNumber</span>()
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>decoder</span>.<span style=color:#a6e22e>Decode</span>(<span style=color:#f92672>&amp;</span><span style=color:#a6e22e>v</span>)
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>Fatal</span>(<span style=color:#a6e22e>err</span>)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>var</span> <span style=color:#a6e22e>f</span> <span style=color:#66d9ef>func</span>(<span style=color:#66d9ef>interface</span>{}, <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>) <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>f</span> = <span style=color:#66d9ef>func</span>(<span style=color:#a6e22e>listOrInt</span> <span style=color:#66d9ef>interface</span>{}, <span style=color:#a6e22e>parent</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>) <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>switch</span> <span style=color:#a6e22e>v</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>listOrInt</span>.(<span style=color:#66d9ef>type</span>) {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>case</span> <span style=color:#a6e22e>json</span>.<span style=color:#a6e22e>Number</span>:
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>n</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>strconv</span>.<span style=color:#a6e22e>Atoi</span>(string(<span style=color:#a6e22e>v</span>))
+</span></span><span style=display:flex><span>			<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+</span></span><span style=display:flex><span>				panic(<span style=color:#a6e22e>err</span>)
+</span></span><span style=display:flex><span>			}
+</span></span><span style=display:flex><span>			<span style=color:#66d9ef>return</span> <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>Number</span>{<span style=color:#a6e22e>value</span>: <span style=color:#a6e22e>n</span>, <span style=color:#a6e22e>parent</span>: <span style=color:#a6e22e>parent</span>}
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>case</span> []<span style=color:#66d9ef>interface</span>{}:
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>n</span> <span style=color:#f92672>:=</span> <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>Number</span>{<span style=color:#a6e22e>parent</span>: <span style=color:#a6e22e>parent</span>}
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>left</span> = <span style=color:#a6e22e>f</span>(<span style=color:#a6e22e>v</span>[<span style=color:#ae81ff>0</span>], <span style=color:#a6e22e>n</span>)
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>right</span> = <span style=color:#a6e22e>f</span>(<span style=color:#a6e22e>v</span>[<span style=color:#ae81ff>1</span>], <span style=color:#a6e22e>n</span>)
+</span></span><span style=display:flex><span>			<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>n</span>
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>default</span>:
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>Fatalf</span>(<span style=color:#e6db74>&#34;unknown type %T&#34;</span>, <span style=color:#a6e22e>v</span>)
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>nil</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>f</span>(<span style=color:#a6e22e>v</span>, <span style=color:#66d9ef>nil</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>Another data structure that might be worth exploring for this problem is a <a href=https://en.wikipedia.org/wiki/Zipper_(data_structure)>zipper</a>.</p><h3 id=addition>Addition</h3><p>Addition of snailfish numbers is defined as concatenating two numbers into a new list, and then reducing the result.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>n</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>) <span style=color:#a6e22e>Add</span>(<span style=color:#a6e22e>m</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>) <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>sum</span> <span style=color:#f92672>:=</span> <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>Number</span>{<span style=color:#a6e22e>left</span>: <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>Copy</span>(), <span style=color:#a6e22e>right</span>: <span style=color:#a6e22e>m</span>.<span style=color:#a6e22e>Copy</span>()}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>sum</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>parent</span> = <span style=color:#a6e22e>sum</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>sum</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>parent</span> = <span style=color:#a6e22e>sum</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>sum</span>.<span style=color:#a6e22e>Reduce</span>()
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>sum</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>Copies are used to avoid mutating the input. I added that when I saw Part 2 and realized that numbers must be used multiple times, so it&rsquo;s a bad idea to modify them in-place.</p><h3 id=reduction>Reduction</h3><p>Just try exploding or splitting until there is nothing left to explode or split. If something was exploded, try exploding again.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>n</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>) <span style=color:#a6e22e>Reduce</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>for</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>explodable</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>findExplodable</span>(<span style=color:#ae81ff>0</span>)
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>explodable</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>explodable</span>.<span style=color:#a6e22e>Explode</span>()
+</span></span><span style=display:flex><span>			<span style=color:#66d9ef>continue</span>
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>splittable</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>findSplittable</span>()
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>splittable</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>splittable</span>.<span style=color:#a6e22e>Split</span>()
+</span></span><span style=display:flex><span>			<span style=color:#66d9ef>continue</span>
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>break</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h3 id=splitting>Splitting</h3><p>Walk through the leaf nodes in left to right order, and return the first number that is too high (&ldquo;splittable&rdquo;), then replace that number with a new pair.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>n</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>) <span style=color:#a6e22e>findSplittable</span>() <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span> {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>n</span> <span style=color:#f92672>==</span> <span style=color:#66d9ef>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>nil</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>leftSplittable</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>findSplittable</span>(); <span style=color:#a6e22e>leftSplittable</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>leftSplittable</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>value</span> <span style=color:#f92672>&gt;=</span> <span style=color:#ae81ff>10</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>n</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>rightSplittable</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>findSplittable</span>(); <span style=color:#a6e22e>rightSplittable</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>rightSplittable</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>nil</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>n</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>) <span style=color:#a6e22e>Split</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>down</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>value</span> <span style=color:#f92672>/</span> <span style=color:#ae81ff>2</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>up</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>value</span> <span style=color:#f92672>/</span> <span style=color:#ae81ff>2</span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>value</span><span style=color:#f92672>%</span><span style=color:#ae81ff>2</span> <span style=color:#f92672>==</span> <span style=color:#ae81ff>1</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>up</span><span style=color:#f92672>++</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>left</span> = <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>Number</span>{<span style=color:#a6e22e>value</span>: <span style=color:#a6e22e>down</span>, <span style=color:#a6e22e>parent</span>: <span style=color:#a6e22e>n</span>}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>right</span> = <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>Number</span>{<span style=color:#a6e22e>value</span>: <span style=color:#a6e22e>up</span>, <span style=color:#a6e22e>parent</span>: <span style=color:#a6e22e>n</span>}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>value</span> = <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h3 id=exploding>Exploding</h3><p>Exploding a pair wasn&rsquo;t too bad to implement after left/right traversal was working.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>n</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>) <span style=color:#a6e22e>findExplodable</span>(<span style=color:#a6e22e>level</span> <span style=color:#66d9ef>int</span>) <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span> {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>n</span> <span style=color:#f92672>==</span> <span style=color:#66d9ef>nil</span> <span style=color:#f92672>||</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>HasValue</span>() {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>nil</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>level</span> <span style=color:#f92672>==</span> <span style=color:#ae81ff>4</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>n</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>leftExplodable</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>findExplodable</span>(<span style=color:#a6e22e>level</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>); <span style=color:#a6e22e>leftExplodable</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>leftExplodable</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>rightExplodable</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>findExplodable</span>(<span style=color:#a6e22e>level</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>); <span style=color:#a6e22e>rightExplodable</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>rightExplodable</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>nil</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>n</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>) <span style=color:#a6e22e>Explode</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>left</span> <span style=color:#f92672>==</span> <span style=color:#66d9ef>nil</span> <span style=color:#f92672>||</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>right</span> <span style=color:#f92672>==</span> <span style=color:#66d9ef>nil</span> {
+</span></span><span style=display:flex><span>		panic(<span style=color:#e6db74>&#34;cannot explode number without left and right&#34;</span>)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>leftInorder</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>findLeft</span>()
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>rightInorder</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>findRight</span>()
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>leftInorder</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>leftInorder</span>.<span style=color:#a6e22e>value</span> <span style=color:#f92672>+=</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>value</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>rightInorder</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>rightInorder</span>.<span style=color:#a6e22e>value</span> <span style=color:#f92672>+=</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>value</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>left</span> = <span style=color:#66d9ef>nil</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>right</span> = <span style=color:#66d9ef>nil</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>value</span> = <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h3 id=leftright-leaf-node-traversal>Left/right leaf node traversal</h3><p>I came up with an algorithm where you start on the exploding number, then traverse up until there is a left branch, follow that left branch, then follow only right branches until a literal number is found. Make two such functions, one for left and one for right.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>n</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>) <span style=color:#a6e22e>findLeft</span>() <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span> {
+</span></span><span style=display:flex><span>	<span style=color:#75715e>// Move up until some node has a left branch
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#66d9ef>for</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>parent</span> <span style=color:#f92672>==</span> <span style=color:#66d9ef>nil</span> {
+</span></span><span style=display:flex><span>			<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>nil</span>
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>parent</span>.<span style=color:#a6e22e>left</span> <span style=color:#f92672>!=</span> <span style=color:#a6e22e>n</span> <span style=color:#f92672>&amp;&amp;</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>parent</span>.<span style=color:#a6e22e>left</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>n</span> = <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>parent</span>.<span style=color:#a6e22e>left</span>
+</span></span><span style=display:flex><span>			<span style=color:#66d9ef>break</span>
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>n</span> = <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>parent</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#75715e>// Move down all right branches until a value is found
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#66d9ef>for</span> !<span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>HasValue</span>() {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>n</span> = <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>right</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>n</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>n</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>) <span style=color:#a6e22e>findRight</span>() <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span> {
+</span></span><span style=display:flex><span>	<span style=color:#75715e>// ...
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>}
+</span></span></code></pre></div><h3 id=the-rest-of-the-code>The rest of the code</h3><p>This runs in about 30 ms in total for part 1 and part 2.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;bufio&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;encoding/json&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;github.com/roessland/gopkg/mathutil&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;log&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;os&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;strconv&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;strings&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;time&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>n</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>) <span style=color:#a6e22e>Copy</span>() <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span> {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>n</span> <span style=color:#f92672>==</span> <span style=color:#66d9ef>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>nil</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>c</span> <span style=color:#f92672>:=</span> <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>Number</span>{}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>HasValue</span>() {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>c</span>.<span style=color:#a6e22e>value</span> = <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>value</span>
+</span></span><span style=display:flex><span>	} <span style=color:#66d9ef>else</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>c</span>.<span style=color:#a6e22e>left</span> = <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>Copy</span>()
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>c</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>parent</span> = <span style=color:#a6e22e>c</span>
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>c</span>.<span style=color:#a6e22e>right</span> = <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>Copy</span>()
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>c</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>parent</span> = <span style=color:#a6e22e>c</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>c</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>n</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>) <span style=color:#a6e22e>HasValue</span>() <span style=color:#66d9ef>bool</span> {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>left</span> <span style=color:#f92672>==</span> <span style=color:#66d9ef>nil</span> <span style=color:#f92672>&amp;&amp;</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>right</span> <span style=color:#f92672>==</span> <span style=color:#66d9ef>nil</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>n</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>) <span style=color:#a6e22e>String</span>() <span style=color:#66d9ef>string</span> {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>HasValue</span>() {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Sprintf</span>(<span style=color:#e6db74>&#34;%d&#34;</span>, <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>value</span>)
+</span></span><span style=display:flex><span>	} <span style=color:#66d9ef>else</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Sprintf</span>(<span style=color:#e6db74>&#34;[%s,%s]&#34;</span>, <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>String</span>(), <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>String</span>())
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>n</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>) <span style=color:#a6e22e>Magnitude</span>() <span style=color:#66d9ef>int</span> {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>HasValue</span>() {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>value</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#ae81ff>3</span><span style=color:#f92672>*</span><span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>Magnitude</span>() <span style=color:#f92672>+</span> <span style=color:#ae81ff>2</span><span style=color:#f92672>*</span><span style=color:#a6e22e>n</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>Magnitude</span>()
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>t0</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Now</span>()
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>part1</span>()
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>part2</span>()
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Since</span>(<span style=color:#a6e22e>t0</span>))
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>part1</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>nums</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>ReadInput</span>()
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>i</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>1</span>; <span style=color:#a6e22e>i</span> &lt; len(<span style=color:#a6e22e>nums</span>); <span style=color:#a6e22e>i</span><span style=color:#f92672>++</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>nums</span>[<span style=color:#ae81ff>0</span>] = <span style=color:#a6e22e>nums</span>[<span style=color:#ae81ff>0</span>].<span style=color:#a6e22e>Add</span>(<span style=color:#a6e22e>nums</span>[<span style=color:#a6e22e>i</span>])
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Part 1:&#34;</span>, <span style=color:#a6e22e>nums</span>[<span style=color:#ae81ff>0</span>].<span style=color:#a6e22e>Magnitude</span>())
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>part2</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>nums</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>ReadInput</span>()
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>maxMagnitude</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>i</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0</span>; <span style=color:#a6e22e>i</span> &lt; len(<span style=color:#a6e22e>nums</span>); <span style=color:#a6e22e>i</span><span style=color:#f92672>++</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>j</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0</span>; <span style=color:#a6e22e>j</span> &lt; len(<span style=color:#a6e22e>nums</span>); <span style=color:#a6e22e>j</span><span style=color:#f92672>++</span> {
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>magnitude</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>nums</span>[<span style=color:#a6e22e>i</span>].<span style=color:#a6e22e>Add</span>(<span style=color:#a6e22e>nums</span>[<span style=color:#a6e22e>j</span>]).<span style=color:#a6e22e>Magnitude</span>()
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>maxMagnitude</span> = <span style=color:#a6e22e>mathutil</span>.<span style=color:#a6e22e>MaxInt</span>(<span style=color:#a6e22e>maxMagnitude</span>, <span style=color:#a6e22e>magnitude</span>)
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Part 2:&#34;</span>, <span style=color:#a6e22e>maxMagnitude</span>)
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>ReadInput</span>() []<span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>f</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>os</span>.<span style=color:#a6e22e>Open</span>(<span style=color:#e6db74>&#34;input.txt&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+</span></span><span style=display:flex><span>		panic(<span style=color:#a6e22e>err</span>)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>scanner</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>bufio</span>.<span style=color:#a6e22e>NewScanner</span>(<span style=color:#a6e22e>f</span>)
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>var</span> <span style=color:#a6e22e>nums</span> []<span style=color:#f92672>*</span><span style=color:#a6e22e>Number</span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>scanner</span>.<span style=color:#a6e22e>Scan</span>() {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>num</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>FromString</span>(<span style=color:#a6e22e>scanner</span>.<span style=color:#a6e22e>Text</span>())
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>nums</span> = append(<span style=color:#a6e22e>nums</span>, <span style=color:#a6e22e>num</span>)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>nums</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h2 id=appendix-tests>Appendix: Tests</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;github.com/stretchr/testify/require&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;testing&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>TestParse12</span>(<span style=color:#a6e22e>t</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>testing</span>.<span style=color:#a6e22e>T</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>num</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>FromString</span>(<span style=color:#e6db74>&#34;[1,2]&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>NotNil</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>num</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#ae81ff>0</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>value</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>NotNil</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>left</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#ae81ff>1</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>value</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Nil</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>left</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Nil</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>right</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>NotNil</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>right</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#ae81ff>2</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>value</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Nil</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>left</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Nil</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>right</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>num</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>parent</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>num</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>parent</span>)
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>TestParseBigDude</span>(<span style=color:#a6e22e>t</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>testing</span>.<span style=color:#a6e22e>T</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>num</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>FromString</span>(<span style=color:#e6db74>&#34;[[[[1,3],[5,3]],[[1,3],[8,7]]],[[[4,9],[6,9]],[[8,2],[7,3]]]]&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#ae81ff>6</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>value</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>num</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>parent</span>.<span style=color:#a6e22e>parent</span>.<span style=color:#a6e22e>parent</span>.<span style=color:#a6e22e>parent</span>)
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>TestReduce</span>(<span style=color:#a6e22e>t</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>testing</span>.<span style=color:#a6e22e>T</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>num</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>FromString</span>(<span style=color:#e6db74>&#34;[[[[[9,8],1],2],3],4]&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>Reduce</span>()
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#ae81ff>9</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>value</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>num</span> = <span style=color:#a6e22e>FromString</span>(<span style=color:#e6db74>&#34;[7,[6,[5,[4,[3,2]]]]]&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>expectExplodable</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>FromString</span>(<span style=color:#e6db74>&#34;[3,2]&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>explodable</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>findExplodable</span>(<span style=color:#ae81ff>0</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>NotNil</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>explodable</span>, <span style=color:#e6db74>&#34;didnt find explodable&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>expectExplodable</span>.<span style=color:#a6e22e>String</span>(), <span style=color:#a6e22e>explodable</span>.<span style=color:#a6e22e>String</span>())
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>Reduce</span>() <span style=color:#75715e>// [7,[6,[5,[7,0]]]]
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#ae81ff>7</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>value</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>String</span>())
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>num</span> = <span style=color:#a6e22e>FromString</span>(<span style=color:#e6db74>&#34;[[6,[5,[4,[3,2]]]],1]&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>Reduce</span>() <span style=color:#75715e>// [[6,[5,[7,0]]],3]
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#e6db74>&#34;[7,0]&#34;</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>String</span>())
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#ae81ff>3</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>value</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>String</span>())
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>num</span> = <span style=color:#a6e22e>FromString</span>(<span style=color:#e6db74>&#34;[[3,[2,[1,[7,3]]]],[6,[5,[4,[3,2]]]]]&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>Reduce</span>() <span style=color:#75715e>// [[3,[2,[8,0]]],[9,[5,[4,[3,2]]]]]
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#e6db74>&#34;[8,0]&#34;</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>String</span>())
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#ae81ff>9</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>value</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>String</span>())
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>num1</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>FromString</span>(<span style=color:#e6db74>&#34;[[[[4,3],4],4],[7,[[8,4],9]]]&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>num2</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>FromString</span>(<span style=color:#e6db74>&#34;[1,1]&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>num</span> = <span style=color:#a6e22e>num1</span>.<span style=color:#a6e22e>Add</span>(<span style=color:#a6e22e>num2</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>expect</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>FromString</span>(<span style=color:#e6db74>&#34;[[[[0,7],4],[[7,8],[6,0]]],[8,1]]&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>expect</span>.<span style=color:#a6e22e>String</span>(), <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>String</span>())
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>TestExplode</span>(<span style=color:#a6e22e>t</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>testing</span>.<span style=color:#a6e22e>T</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>num</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>FromString</span>(<span style=color:#e6db74>&#34;[[[[[9,8],1],2],3],4]&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>explodable</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>findExplodable</span>(<span style=color:#ae81ff>0</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>left</span>, <span style=color:#a6e22e>explodable</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>expect</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>FromString</span>(<span style=color:#e6db74>&#34;[[[[0,9],2],3],4]&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>explodable</span>.<span style=color:#a6e22e>Explode</span>()
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>expect</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>value</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>value</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>expect</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>value</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>value</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>expect</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>value</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>value</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>num</span> = <span style=color:#a6e22e>FromString</span>(<span style=color:#e6db74>&#34;[[[[0,9],2],3],4]&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>explodable</span> = <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>findExplodable</span>(<span style=color:#ae81ff>0</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Nil</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>explodable</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>num</span> = <span style=color:#a6e22e>FromString</span>(<span style=color:#e6db74>&#34;[[[[0,7],4],[[7,8],[0,[6,7]]]],[1,1]]&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>explodable</span> = <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>findExplodable</span>(<span style=color:#ae81ff>0</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#e6db74>&#34;[6,7]&#34;</span>, <span style=color:#a6e22e>explodable</span>.<span style=color:#a6e22e>String</span>())
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>explodable</span>.<span style=color:#a6e22e>Explode</span>()
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>EqualValues</span>(<span style=color:#a6e22e>t</span>, <span style=color:#e6db74>&#34;[[[[0,7],4],[[7,8],[6,0]]],[8,1]]&#34;</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>String</span>())
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>TestFindLeft</span>(<span style=color:#a6e22e>t</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>testing</span>.<span style=color:#a6e22e>T</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>num</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>FromString</span>(<span style=color:#e6db74>&#34;[[[[[9,8],1],2],3],4]&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>explodable</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>findExplodable</span>(<span style=color:#ae81ff>0</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Nil</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>explodable</span>.<span style=color:#a6e22e>findLeft</span>())
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>four</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>right</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#ae81ff>3</span>, <span style=color:#a6e22e>four</span>.<span style=color:#a6e22e>findLeft</span>().<span style=color:#a6e22e>value</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>three</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>right</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#ae81ff>2</span>, <span style=color:#a6e22e>three</span>.<span style=color:#a6e22e>findLeft</span>().<span style=color:#a6e22e>value</span>)
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>TestFindRight</span>(<span style=color:#a6e22e>t</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>testing</span>.<span style=color:#a6e22e>T</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>num</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>FromString</span>(<span style=color:#e6db74>&#34;[[[[[9,8],1],2],3],4]&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>explodable</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>findExplodable</span>(<span style=color:#ae81ff>0</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#ae81ff>1</span>, <span style=color:#a6e22e>explodable</span>.<span style=color:#a6e22e>findRight</span>().<span style=color:#a6e22e>value</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>four</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>right</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Nil</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>four</span>.<span style=color:#a6e22e>findRight</span>())
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>three</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>right</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#ae81ff>4</span>, <span style=color:#a6e22e>three</span>.<span style=color:#a6e22e>findRight</span>().<span style=color:#a6e22e>value</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>num</span> = <span style=color:#a6e22e>FromString</span>(<span style=color:#e6db74>&#34;[[[[0,7],4],[[7,8],[0,[6,7]]]],[1,1]]&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>sixSeven</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>right</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#e6db74>&#34;[6,7]&#34;</span>, <span style=color:#a6e22e>sixSeven</span>.<span style=color:#a6e22e>String</span>())
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>one</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>sixSeven</span>.<span style=color:#a6e22e>findRight</span>()
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>NotNil</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>one</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>,<span style=color:#ae81ff>1</span>, <span style=color:#a6e22e>one</span>.<span style=color:#a6e22e>value</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#ae81ff>1</span>, <span style=color:#a6e22e>one</span>.<span style=color:#a6e22e>parent</span>.<span style=color:#a6e22e>right</span>.<span style=color:#a6e22e>value</span>)
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>TestBlackMagic</span>(<span style=color:#a6e22e>t</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>testing</span>.<span style=color:#a6e22e>T</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>num</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>FromString</span>(<span style=color:#e6db74>&#34;[[[[[4,3],4],4],[7,[[8,4],9]]],[1,1]]&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>findExplodable</span>(<span style=color:#ae81ff>0</span>).<span style=color:#a6e22e>Explode</span>()
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#e6db74>&#34;[[[[0,7],4],[7,[[8,4],9]]],[1,1]]&#34;</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>String</span>())
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>num</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>parent</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>findExplodable</span>(<span style=color:#ae81ff>0</span>).<span style=color:#a6e22e>Explode</span>()
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#e6db74>&#34;[[[[0,7],4],[15,[0,13]]],[1,1]]&#34;</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>String</span>())
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>num</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>parent</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>findSplittable</span>().<span style=color:#a6e22e>Split</span>()
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#e6db74>&#34;[[[[0,7],4],[[7,8],[0,13]]],[1,1]]&#34;</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>String</span>())
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>num</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>parent</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>findSplittable</span>().<span style=color:#a6e22e>Split</span>()
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#e6db74>&#34;[[[[0,7],4],[[7,8],[0,[6,7]]]],[1,1]]&#34;</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>String</span>())
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>num</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>parent</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>findExplodable</span>(<span style=color:#ae81ff>0</span>).<span style=color:#a6e22e>Explode</span>()
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#e6db74>&#34;[[[[0,7],4],[[7,8],[6,0]]],[8,1]]&#34;</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>String</span>())
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>require</span>.<span style=color:#a6e22e>Equal</span>(<span style=color:#a6e22e>t</span>, <span style=color:#a6e22e>num</span>, <span style=color:#a6e22e>num</span>.<span style=color:#a6e22e>left</span>.<span style=color:#a6e22e>parent</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><ul class=pa0></ul><div class="mt6 instapaper_ignoref"></div></div><aside class="w-30-l mt6-l"></aside></article></main><footer class="bg-black bottom-0 w-100 pa3" role=contentinfo><div class="flex justify-between"><a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href=https://www.roessland.com/>&copy; Andreas Røssland 2022</a><div><div class=ananke-socials><a href=https://github.com/roessland target=_blank class="github ananke-social-link link-transition stackoverflow link dib z-999 pt3 pt0-l mr1" title="GitHub link" rel=noopener aria-label="follow on GitHub——Opens in a new window"><span class=icon><svg height="50" style="enable-background:new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M256 32C132.3 32 32 134.8 32 261.7c0 101.5 64.2 187.5 153.2 217.9 11.2 2.1 15.3-5 15.3-11.1.0-5.5-.2-19.9-.3-39.1-62.3 13.9-75.5-30.8-75.5-30.8-10.2-26.5-24.9-33.6-24.9-33.6-20.3-14.3 1.5-14 1.5-14 22.5 1.6 34.3 23.7 34.3 23.7 20 35.1 52.4 25 65.2 19.1 2-14.8 7.8-25 14.2-30.7-49.7-5.8-102-25.5-102-113.5.0-25.1 8.7-45.6 23-61.6-2.3-5.8-10-29.2 2.2-60.8.0.0 18.8-6.2 61.6 23.5 17.9-5.1 37-7.6 56.1-7.7 19 .1 38.2 2.6 56.1 7.7 42.8-29.7 61.5-23.5 61.5-23.5 12.2 31.6 4.5 55 2.2 60.8 14.3 16.1 23 36.6 23 61.6.0 88.2-52.4 107.6-102.3 113.3 8 7.1 15.2 21.1 15.2 42.5.0 30.7-.3 55.5-.3 63 0 6.1 4 13.3 15.4 11C415.9 449.1 480 363.1 480 261.7 480 134.8 379.7 32 256 32z"/></svg></span><span class=new-window><svg height="8" style="enable-background:new 0 0 1000 1000" viewBox="0 0 1e3 1e3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M598 128h298v298h-86V274L392 692l-60-60 418-418H598v-86zM810 810V512h86v298c0 46-40 86-86 86H214c-48 0-86-40-86-86V214c0-46 38-86 86-86h298v86H214v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:"/></svg></span></a></div></div></div></footer></body></html>
